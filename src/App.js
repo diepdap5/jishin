@@ -1,20 +1,31 @@
 // import logo from './logo.svg';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import {Button } from 'antd';
+import {Button, Switch } from 'antd';
 
 import './App.css';
 import MapTemp from './container/MapTemp'
+import ShelterInfo from './container/ShelterInfo'
 
 
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <Fragment>
-          <Route path="/" component={MapTemp}/>
-        </Fragment>
-      </BrowserRouter>
+      <div className="App">
+        <BrowserRouter>
+          <Fragment>
+            <Route exact path="/"
+              render={(props) => {
+                  return <MapTemp/>
+              }} />
+
+            <Route exact path="/shelter-details"
+              render={(props) => {
+                return <ShelterInfo/>
+              }} />
+          </Fragment>
+        </BrowserRouter>
+      </div>
     );
   }
 }
