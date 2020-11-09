@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import {Button, Switch } from 'antd';
 
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import MapTemp from './container/MapTemp'
 import ShelterInfo from './container/ShelterInfo'
 
