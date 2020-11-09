@@ -9,11 +9,11 @@ import SimpleMap from '../component/ForMapTemp/Map'
 
 class MapTemp extends Component {
   state = {
-    my_latitude: 21.020671999999998,
-    my_longitude: 105.84391679999999,
-    zoom : 15
+    my_latitude: 21,
+    my_longitude: 105,
+    zoom : 11
   }
-  handleUserLocation = () => {
+  componentDidMount = () => {
     var my_latitude;
     var my_longitude;
   

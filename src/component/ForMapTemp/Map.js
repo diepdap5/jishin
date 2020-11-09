@@ -1,4 +1,4 @@
-import { Marker } from '@react-google-maps/api';
+import Marker from './Marker';
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
@@ -6,14 +6,14 @@ class SimpleMap extends Component {
   
   static defaultProps = {
     center: {
-      lat: 21.020671999999998,
-      lng: 105.84391679999999
+      lat: 21,
+      lng: 105
     },
-    zoom: 15
+    zoom: 11
   };
-  renderMarkers(map, maps) {
+  renderMarkers(map, maps, center) {
     let marker = new maps.Marker({
-      position: {lat: 21.020671999999998, lng: 105.84391679999999 },
+      position: center,
       map,
       title: 'Shelter 01'
     });
@@ -28,8 +28,14 @@ class SimpleMap extends Component {
           bootstrapURLKeys={{ key: 'AIzaSyCUCeYVV74IxeZkqF62sxloBc8m-EBkXOE' }}
           center={this.props.center}
           defaultZoom={this.props.zoom}
-          onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
+          onGoogleApiLoaded={({map, maps,center}) => this.renderMarkers(map, maps, this.props.center)}
         >
+          <Marker
+            lat={this.props.center.lat}
+            lng={this.props.center.lng}
+            name="My Location"
+            color="blue"
+          />
         </GoogleMapReact>
       </div>
     );
