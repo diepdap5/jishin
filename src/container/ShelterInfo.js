@@ -1,17 +1,17 @@
 // import logo from './logo.svg';
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import {Button } from 'antd';
 
-import '../App.css';
+import Shelters from '../component/ForShelter/Shelters'
 
 
-class ShelterInfo extends Component {
-    render (){
-        return (
-          <h1>temp</h1>
-        );
-      }
+class ShelterInfo extends Component { 
+
+  render (){
+      return (
+        <Shelters/>
+      );
+    }
 }
 
 export default ShelterInfo;
