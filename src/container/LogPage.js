@@ -25,14 +25,28 @@ const { Header, Content, Footer, Sider } = Layout;
 //     dataIndex: 'address',
 //   },
 // ];
-var data = [];
+// var data = [];
 class LogPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      posts: [],
-    };
+    // this.state = {
+    //   posts: [],
+    //   pagination: {
+    //     current: 1,
+    //     pageSize: 5,
+    //   },
+    //   loading: false
+
+    // };
   }
+  state = {
+    posts: [],
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
+    loading: false,
+  };
 
   componentDidMount() {
     axios
@@ -40,7 +54,7 @@ class LogPage extends Component {
       .then((res) => {
         const posts = res.data.map((obj) => ({
           id: obj.id,
-          occure_time: obj.occure_time,
+          occure_time: new Date(obj.occure_time).toISOString("en-US"),
           place: obj.place,
           strength: obj.strength,
           coord_lat: obj.coord_lat,
@@ -50,8 +64,33 @@ class LogPage extends Component {
         this.setState({ posts });
       });
   }
+  handleTableChange = (pagination) => {
+    this.setState({
+      pagination: {
+        ...pagination,
+      },
+    });
+  };
 
   render() {
+    const { posts, pagination, loading } = this.state;
+    const columns = [
+      {
+        title: "Location",
+        dataIndex: "place",
+        key: "place",
+      },
+      {
+        title: "Occured time",
+        dataIndex: "occure_time",
+        key: "occure_time",
+      },
+      {
+        title: "Strength",
+        dataIndex: "strength",
+        key: "strength",
+      },
+    ];
     return (
       <Router>
         <Layout>
@@ -96,25 +135,17 @@ class LogPage extends Component {
                   <Route path="/">
                     <MapTemp pagename={this.props.pagename} />
                     {/* <Table columns={columns} dataSource={this.state.posts} size="middle" /> */}
-                    <ul>
-                      {this.state.posts.map(function (post, index) {
-                        return (
-                          <div key={index}>
-                            <table class="w3-table w3-striped w3-bordered">
-                              <tr>
-                                <th>{post.place}</th>
-                                <td>{post.occure_time}</td>
-                                <td>{post.strength}</td>
-                              </tr>
-                            </table>
-                          </div>
-                        );
-                      })}
-                    </ul>
                   </Route>
                 </Switch>
               </div>
             </Content>
+            <Table
+              columns={columns}
+              dataSource={posts}
+              pagination={pagination}
+              loading={loading}
+              onChange={this.handleTableChange}
+            />
             <Footer style={{ textAlign: "center" }}>Design by Hanabi</Footer>
           </Layout>
         </Layout>
