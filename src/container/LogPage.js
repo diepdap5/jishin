@@ -7,6 +7,8 @@ import ShelterInfo from "../container/ShelterInfo";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
+import { Breadcrumb, Row, Col, Avatar } from "antd";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 // const columns = [
@@ -98,16 +100,13 @@ class LogPage extends Component {
                       {this.state.posts.map(function (post, index) {
                         return (
                           <div key={index}>
-                            <table>
+                            <table class="w3-table w3-striped w3-bordered">
                               <tr>
                                 <th>{post.place}</th>
                                 <td>{post.occure_time}</td>
                                 <td>{post.strength}</td>
                               </tr>
                             </table>
-                            {/* <h1>{post.place}</h1>
-                            <p>{post.occure_time}</p>
-                            <p>{post.strength}</p> */}
                           </div>
                         );
                       })}
