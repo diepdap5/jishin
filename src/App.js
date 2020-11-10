@@ -1,13 +1,11 @@
 // import logo from './logo.svg';
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import {Button, Switch } from 'antd';
 
+import "antd/dist/antd.css";
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import MapTemp from './container/MapTemp'
 import ShelterInfo from './container/ShelterInfo'
-
+import LogPage from './container/LogPage'
 
 class App extends Component {
   render() {
@@ -17,15 +15,20 @@ class App extends Component {
           <Fragment>
             <Route exact path="/"
               render={(props) => {
-                  return <MapTemp/>
+                  return (
+                    <div>
+                      {/* <MapTemp pagename={this.props.pagename} /> */}
+                      <LogPage pagename={this.props.pagename} />
+                    </div>
+                  )
               }} />
-
             <Route exact path="/shelter-details"
               render={(props) => {
                 return <ShelterInfo/>
               }} />
           </Fragment>
         </BrowserRouter>
+        
       </div>
     );
   }
