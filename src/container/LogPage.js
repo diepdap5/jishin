@@ -93,7 +93,7 @@ class LogPage extends Component {
     return (
       <Router>
         <Layout>
-          <Sider
+          {/* <Sider
             breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={(broken) => {
@@ -112,7 +112,7 @@ class LogPage extends Component {
                 <Link to="/shelter-details">避難所情報</Link>
               </Menu.Item>
             </Menu>
-          </Sider>
+          </Sider> */}
           <Layout>
             <Header
               className="site-layout-sub-header-background"
