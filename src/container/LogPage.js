@@ -106,7 +106,7 @@ class LogPage extends Component {
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
               <Menu.Item key="1" icon={<HomeOutlined />}>
-                <Link to="/">地震</Link>
+                <Link to="/">地震情報</Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<NotificationOutlined />}>
                 <Link to="/shelter-details">避難所情報</Link>
@@ -123,7 +123,7 @@ class LogPage extends Component {
                 color: "black",
               }}
             >
-              地震
+              地震情報
             </Header>
             <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
               <div>
