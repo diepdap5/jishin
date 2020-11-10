@@ -23,13 +23,27 @@ const { Header, Content, Footer, Sider } = Layout;
 //     dataIndex: 'address',
 //   },
 // ];
-var data = [];
+// var data = [];
 class LogPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      posts: [],
-    };
+    // this.state = {
+    //   posts: [],
+    //   pagination: {
+    //     current: 1,
+    //     pageSize: 5,
+    //   },
+    //   loading: false
+
+    // };
+  }
+  state = {
+    posts: [],
+    pagination: {
+      current: 1,
+      pageSize: 5,
+    },
+    loading: false
   }
 
   componentDidMount() {
@@ -48,8 +62,34 @@ class LogPage extends Component {
         this.setState({ posts });
       });
   }
+  handleTableChange = (pagination) => {
+    this.setState({
+      pagination: {
+        ...pagination
+      }
+    });
+  }
 
   render() {
+    const { posts, pagination, loading } = this.state;
+    const columns = [
+      {
+        title: 'Location',
+        dataIndex: 'place',
+        key: 'place',
+      },
+      {
+        title: 'Occured time',
+        dataIndex: 'occure_time',
+        key: 'occure_time'
+      },
+      {
+        title: 'Strength',
+        dataIndex: 'strength',
+        key: 'strength'
+
+      }
+    ];
     return (
       <Router>
         <Layout>
@@ -97,17 +137,15 @@ class LogPage extends Component {
                     <ul>
                       {this.state.posts.map(function (post, index) {
                         return (
-                          <div key={index}>
-                            <table>
+                          <div >
+                            {/* <table>
                               <tr>
                                 <th>{post.place}</th>
                                 <td>{post.occure_time}</td>
                                 <td>{post.strength}</td>
                               </tr>
-                            </table>
-                            {/* <h1>{post.place}</h1>
-                            <p>{post.occure_time}</p>
-                            <p>{post.strength}</p> */}
+                            </table> */}
+
                           </div>
                         );
                       })}
@@ -116,6 +154,13 @@ class LogPage extends Component {
                 </Switch>
               </div>
             </Content>
+            <Table
+              columns={columns}
+              dataSource={posts}
+              pagination={pagination}
+              loading={loading}
+              onChange={this.handleTableChange}
+            />
             <Footer style={{ textAlign: "center" }}>Design by Hanabi</Footer>
           </Layout>
         </Layout>
