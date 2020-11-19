@@ -1,46 +1,55 @@
 // import logo from './logo.svg';
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import {Button } from 'antd';
 
 import '../App.css';
 import SimpleMap from '../component/ForMapTemp/Map'
-
+import axios from "axios";
 
 class MapTemp extends Component {
   state = {
-    my_latitude: 21,
-    my_longitude: 105,
-    zoom : 11
+    data: [],
   }
-  componentDidMount = () => {
-    var my_latitude;
-    var my_longitude;
-  
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        my_latitude = position.coords.latitude;
-        this.setState({
-          my_latitude: my_latitude
-        })
-        console.log("My latitude: "+ this.state.my_latitude);
-        my_longitude = position.coords.longitude;
-        this.setState({
-          my_longitude: my_longitude
-        })
-        console.log("My longitude: "+ this.state.my_longitude);
-      }
-    );
-  };
-  render (){
+  componentDidMount() {
+    if (this.props.data === 'shelter') {
+      axios
+        .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
+        .then((res) => {
+          const data = res.data.map((obj) => ({
+            id: obj.id,
+            name: obj.name,
+            place: obj.place,
+            coord_lat: obj.coord_lat,
+            coord_lng: obj.coord_lng,
+          }));
+          this.setState({ data });
+        });
+    }
+    else if (this.props.data === 'jishin'){
+      axios
+      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/log`)
+      .then((res) => {
+        const data = res.data.map((obj) => ({
+          id: obj.id,
+          occure_time: obj.occure_time,
+          place: obj.place,
+          strength: obj.strength,
+          coord_lat: obj.coord_lat,
+          coord_lng: obj.coord_long,
+        }));
+        this.setState({ data });
+      });
+    }
+  }
+  render() {
     return (
       <div className="App">
-        {/* <Button type="primary" onClick = {this.handleUserLocation}>ClickMe</Button> */}
-        <SimpleMap center={{lat:this.state.my_latitude, lng:this.state.my_longitude}}/>
+        <SimpleMap 
+        center={this.props.config_center.lat == null ? this.props.default_center : this.props.config_center} 
+        data = {this.state.data}/>
       </div>
     );
   }
-  
+
 }
 
 export default MapTemp;

@@ -1,49 +1,27 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Layout, Menu, Table } from "antd";
-import { HomeOutlined, NotificationOutlined } from "@ant-design/icons";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Layout, Table, Button, Tag } from "antd";
 import ShelterInfo from "../container/ShelterInfo";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
-const { Header, Content, Footer, Sider } = Layout;
-
-// const columns = [
-//   {
-//     title: 'Name',
-//     dataIndex: 'name',
-//   },
-//   {
-//     title: 'Age',
-//     dataIndex: 'age',
-//   },
-//   {
-//     title: 'Address',
-//     dataIndex: 'address',
-//   },
-// ];
-// var data = [];
+const { Header, Content, Footer } = Layout;
 class LogPage extends Component {
   constructor(props) {
-    super(props);
-    // this.state = {
-    //   posts: [],
-    //   pagination: {
-    //     current: 1,
-    //     pageSize: 5,
-    //   },
-    //   loading: false
-
-    // };
-  }
-  state = {
-    posts: [],
-    pagination: {
-      current: 1,
-      pageSize: 5,
-    },
-    loading: false
+    super(props)
+    this.state = {
+      posts: [],
+      pagination: {
+        current: 1,
+        pageSize: 5,
+      },
+      loading: false,
+      config_center: {
+        lat: null,
+        lng: null
+      }
+    }
   }
 
   componentDidMount() {
@@ -58,7 +36,6 @@ class LogPage extends Component {
           coord_lat: obj.coord_lat,
           coord_long: obj.coord_long,
         }));
-        // {id: obj.id, occure_time: obj.occure_time, place: obj.place, strength: obj.strength,coord_lat: obj.coord_lat, coord_long: obj.coord_long }
         this.setState({ posts });
       });
   }
@@ -69,100 +46,74 @@ class LogPage extends Component {
       }
     });
   }
+  handleChangeMap = () => {
+    this.setState({
+      config_center: {
+        lat: 22,
+        lng: 105
+      }
+    });
+  }
 
   render() {
-    const { posts, pagination, loading } = this.state;
+    const { posts, pagination, loading, config_center } = this.state;
     const columns = [
       {
         title: 'Location',
         dataIndex: 'place',
-        key: 'place',
+        key: 'jishin_place',
       },
       {
         title: 'Occured time',
         dataIndex: 'occure_time',
-        key: 'occure_time'
+        key: 'jishin_occure_time'
       },
       {
         title: 'Strength',
         dataIndex: 'strength',
-        key: 'strength'
+        key: 'jishin_strength'
 
       }
     ];
     return (
       <Router>
         <Layout>
-          {/* <Sider
-            breakpoint="lg"
-            collapsedWidth="0"
-            onBreakpoint={(broken) => {
-              console.log(broken);
-            }}
-            onCollapse={(collapsed, type) => {
-              console.log(collapsed, type);
+          <Header
+            className="site-layout-sub-header-background"
+            style={{
+              padding: 0,
+              textAlign: "center",
+              fontSize: "30px",
+              color: "black",
             }}
           >
-            <div className="logo" />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-              <Menu.Item key="1" icon={<HomeOutlined />}>
-                <Link to="/">地震情報</Link>
-              </Menu.Item>
-              <Menu.Item key="2" icon={<NotificationOutlined />}>
-                <Link to="/shelter-details">避難所情報</Link>
-              </Menu.Item>
-            </Menu>
-          </Sider> */}
-          <Layout>
-            <Header
-              className="site-layout-sub-header-background"
-              style={{
-                padding: 0,
-                textAlign: "center",
-                fontSize: "30px",
-                color: "black",
-              }}
-            >
-              地震情報
+            地震情報
             </Header>
-            <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
-              <div>
-                <Switch>
-                  <Route path="/shelter-details">
-                    <ShelterInfo />
-                  </Route>
-                  <Route path="/">
-                    <MapTemp pagename={this.props.pagename} />
-                    {/* <Table columns={columns} dataSource={this.state.posts} size="middle" /> */}
-                    <ul>
-                      {this.state.posts.map(function (post, index) {
-                        return (
-                          <div >
-                            {/* <table>
-                              <tr>
-                                <th>{post.place}</th>
-                                <td>{post.occure_time}</td>
-                                <td>{post.strength}</td>
-                              </tr>
-                            </table> */}
-
-                          </div>
-                        );
-                      })}
-                    </ul>
-                  </Route>
-                </Switch>
-              </div>
-            </Content>
-            <Table
-              columns={columns}
-              dataSource={posts}
-              pagination={pagination}
-              loading={loading}
-              onChange={this.handleTableChange}
-            />
-            <Footer style={{ textAlign: "center" }}>Design by Hanabi</Footer>
-          </Layout>
+          <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
+            <div>
+              <Switch>
+                <Route path="/shelter-details">
+                  <ShelterInfo />
+                </Route>
+                <Route path="/">
+                  <Button type="primary" onClick={this.handleChangeMap}>ClickMe</Button>
+                  <MapTemp
+                    pagename={this.props.pagename}
+                    default_center={this.props.user_location}
+                    config_center={config_center}
+                    data='jishin' />
+                </Route>
+              </Switch>
+            </div>
+          </Content>
+          <Table
+            columns={columns}
+            dataSource={posts}
+            pagination={pagination}
+            loading={loading}
+            onChange={this.handleTableChange}
+          />
+          <Footer style={{ textAlign: "center" }}>Design by Hanabi</Footer>
         </Layout>
       </Router>
     );
