@@ -1,7 +1,8 @@
 import "antd/dist/antd.css";
 import "../App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Layout, Table, Button, Tag } from "antd";
+import { Layout, Table, Tag, Button } from "antd";
+// import { HomeOutlined, NotificationOutlined } from "@ant-design/icons";
 import ShelterInfo from "../container/ShelterInfo";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
@@ -25,19 +26,27 @@ class LogPage extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/log`)
-      .then((res) => {
-        const posts = res.data.map((obj) => ({
+    axios.get('https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/log').then((res) => {
+      const posts = res.data.map((obj) => {
+        let timeLeft = '';
+        const difference = obj.occure_time - Date.now();
+        if (difference > 0) {
+          if (difference > 24 * 60 * 60) timeLeft = `${Math.floor(difference / 24 / 60 / 60)} days left`;
+          else if (difference > 60 * 60) timeLeft = `${Math.floor(difference / 60 / 60)} hours left`;
+          else if (difference > 60) timeLeft = `${Math.floor(difference / 60)} minutes left`;
+          else timeLeft = `${difference} seconds left`;
+        }
+        return {
           id: obj.id,
-          occure_time: obj.occure_time,
+          occure_time: `${new Date(obj.occure_time * 1000).toString()} ${timeLeft ? '- ' + timeLeft : ''}`,
           place: obj.place,
           strength: obj.strength,
           coord_lat: obj.coord_lat,
-          coord_long: obj.coord_long,
-        }));
-        this.setState({ posts });
+          coord_lng: obj.coord_long
+        };
       });
+      this.setState({ posts });
+    });
   }
   handleTableChange = (pagination) => {
     this.setState({
@@ -71,8 +80,8 @@ class LogPage extends Component {
       {
         title: 'Strength',
         dataIndex: 'strength',
-        key: 'jishin_strength'
-
+        key: 'strength',
+        render: text => <Tag color="red">{text}</Tag>
       }
     ];
     return (
@@ -85,6 +94,7 @@ class LogPage extends Component {
               textAlign: "center",
               fontSize: "30px",
               color: "black",
+              background: "#FFE3F2"
             }}
           >
             地震情報
@@ -101,7 +111,7 @@ class LogPage extends Component {
                     pagename={this.props.pagename}
                     default_center={this.props.user_location}
                     config_center={config_center}
-                    data='jishin' />
+                    data={posts} />
                 </Route>
               </Switch>
             </div>

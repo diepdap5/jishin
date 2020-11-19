@@ -28,8 +28,6 @@ class SimpleMap extends Component {
             color="blue"
           />
           {this.props.data.map(function (this_data, index) {
-            console.log("map lat: " + this_data.coord_lat);
-            console.log("map lng: " + this_data.coord_lng);
             if (this_data.name) {
               return (
                 <Marker

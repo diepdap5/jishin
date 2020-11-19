@@ -51,7 +51,7 @@ class App extends Component {
                   style={{ background: '#FFE3F2' }}
                 >
                   <div className="logo" />
-                  <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
+                  <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]} style={{ background: '#FFE3F2' }}>
                     <Menu.Item key="1" icon={<HomeOutlined />}>
                       <Link to="/">地震情報</Link>
                     </Menu.Item>

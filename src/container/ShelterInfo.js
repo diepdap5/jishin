@@ -67,16 +67,17 @@ class ShelterPage extends Component {
     ];
     return (
       <div>
-        <Header
-          className="site-layout-sub-header-background"
-          style={{
-            padding: 0,
-            textAlign: "center",
-            fontSize: "30px",
-            color: "black",
-          }}
-        >
-          避難所情報
+      <Header
+        className="site-layout-sub-header-background"
+        style={{
+          padding: 0,
+          textAlign: "center",
+          fontSize: "30px",
+          color: "black",
+          background: "#FFE3F2"
+        }}
+      >
+        避難所情報
       </Header>
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
@@ -84,7 +85,8 @@ class ShelterPage extends Component {
             <MapTemp
               pagename={this.props.pagename}
               default_center={this.props.user_location}
-              config_center={config_center} />
+              config_center={config_center} 
+              data={shelters}/>
           </div>
         </Content>
 
