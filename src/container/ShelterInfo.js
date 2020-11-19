@@ -66,6 +66,7 @@ class ShelterPage extends Component {
           textAlign: "center",
           fontSize: "30px",
           color: "black",
+          background: "#FFE3F2"
         }}
       >
         避難所情報

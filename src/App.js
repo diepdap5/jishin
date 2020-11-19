@@ -27,9 +27,11 @@ class App extends Component {
                 onCollapse={(collapsed, type) => {
                   console.log(collapsed, type);
                 }}
+                theme="light"
+                style={{ background: '#FFE3F2' }}
               >
                 <div className="logo" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+                <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]} style={{ background: '#FFE3F2' }}>
                   <Menu.Item key="1" icon={<HomeOutlined />}>
                     <Link to="/">地震情報</Link>
                   </Menu.Item>
