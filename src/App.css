@@ -49,3 +49,12 @@
 .site-layout-background {
   background: #fff;
 }
+.badge {
+  position: relative;
+  top: -20px;
+  left: -12px;
+  color: #fff;
+  padding: 2px 5px;
+  background-color: red;
+  border-radius: 50%;
+}
