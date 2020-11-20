@@ -137,7 +137,7 @@ class LogPage extends Component {
             <Dropdown overlay={menu} placement="bottomCenter">
               <Button
                 style={{
-                  left: 680,
+                  left: 510,
                   width: 10,
                   background: "#FFE3F2",
                   border: "yellow",

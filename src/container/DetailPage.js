@@ -98,7 +98,7 @@ class DetailPage extends Component {
             <span>地震情報</span>
             <Button
               style={{
-                left: 680,
+                left: 510,
                 width: 10,
                 background: "#FFE3F2",
                 border: "yellow",
