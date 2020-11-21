@@ -114,6 +114,7 @@ class ShelterPage extends Component {
 
   selectRow = (record) => {
     this.handleCenterLocation(record.coord_lat, record.coord_lng);
+    window.location.href = "#";
   }
 
   render() {
@@ -123,7 +124,6 @@ class ShelterPage extends Component {
         title: "Name",
         dataIndex: "name",
         key: "shelter_name",
-        render: text => <a href="#">{text}</a>,
       },
       {
         title: "Place",
