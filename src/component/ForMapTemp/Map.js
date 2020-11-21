@@ -26,7 +26,9 @@ class SimpleMap extends Component {
             lng={this.props.center.lng}
             name="You're here"
             color="blue"
+            tooltip = "You're here"
           />
+          
           {this.props.data.map(function (this_data, index) {
             if (this_data.name) {
               return (
@@ -35,6 +37,7 @@ class SimpleMap extends Component {
                   lng={this_data.coord_lng}
                   name={this_data.name}
                   color="green"
+                  tooltip={this_data.name + "\n" + this_data.place}
                 />
             );
             } else {
@@ -44,6 +47,7 @@ class SimpleMap extends Component {
                   lng={this_data.coord_lng}
                   name={"Time: " + this_data.occure_time + " \nStrength: " + this_data.strength}
                   color="red"
+                  tooltip={this_data.name + "\n" + this_data.place}
                 />
             );
             }
