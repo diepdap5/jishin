@@ -82,6 +82,15 @@ class ShelterPage extends Component {
     });
   };
 
+  handleCenterLocation = (x, y) =>{
+    this.setState({
+      config_center: {
+        lat: x,
+        lng: y,
+      },
+    });
+  }
+
   onChange = (value, event) => {
     axios
       .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
@@ -103,6 +112,10 @@ class ShelterPage extends Component {
       });
   }
 
+  selectRow = (record) => {
+    this.handleCenterLocation(record.coord_lat, record.coord_lng);
+  }
+
   render() {
     const { shelters, pagination, loading, config_center } = this.state;
     const columns = [
@@ -110,6 +123,7 @@ class ShelterPage extends Component {
         title: "Name",
         dataIndex: "name",
         key: "shelter_name",
+        render: text => <a href="#">{text}</a>,
       },
       {
         title: "Place",
@@ -176,7 +190,11 @@ class ShelterPage extends Component {
           pagination={pagination}
           loading={loading}
           onChange={this.handleTableChange}
-          className="shelter-table"
+          onRow={(record) => ({
+            onClick: () => {
+              this.selectRow(record);
+            },
+          })}
         />
         <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>Design by Hanabi</Footer>
       </div>
