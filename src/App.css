@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #fff;
 }
 
 @keyframes App-logo-spin {
@@ -38,7 +38,7 @@
 }
 #components-layout-demo-responsive .logo {
   height: 32px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(255, 255, 255);
   margin: 16px;
 }
 
@@ -58,3 +58,51 @@
   background-color: red;
   border-radius: 50%;
 }
+
+.ant-menu-item-selected {
+  background-color: pink !important; 
+  color: #81004B !important;
+}
+
+.ant-menu-item-selected a {
+  color: #81004B !important;
+}
+
+.ant-menu-item-selected a:hover {
+  color: #81004B !important; 
+}
+
+.ant-menu-item a:hover {
+  color: #81004B !important; 
+}
+
+.ant-menu-item-active {
+  color: #81004B !important; 
+}
+
+.ant-menu-item-selected::after {
+  border-right-color: #81004B !important;
+}
+
+.ant-pagination-item-active a {
+  color: #81004B !important;
+}
+
+.ant-pagination-item :hover{
+  color: #81004B !important;
+}
+
+.ant-pagination-item {
+  border-color: #81004B!important;
+}
+
+.ant-pagination-next :hover{
+  color: #81004B !important;
+  border-color: #81004B !important;
+}
+
+.ant-pagination-prev :hover{
+  color: #81004B !important;
+  border-color:#81004B!important;
+}
+

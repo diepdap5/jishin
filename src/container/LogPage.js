@@ -60,7 +60,7 @@ class LogPage extends Component {
       .then((res) => {
         const posts = res.data.map((obj) => {
           let timeLeft = "";
-          const difference = obj.occure_time - Date.now();
+          const difference = obj.occure_time - Date.now() /1000;
           if (difference > 0) {
             if (difference > 24 * 60 * 60)
               timeLeft = `${Math.floor(difference / 24 / 60 / 60)} days left`;
@@ -122,7 +122,7 @@ class LogPage extends Component {
     ];
     return (
       <Router>
-        <Layout>
+        <Layout style={{background: "#FFFFFF"}}>
           <Header
             className="site-layout-sub-header-background"
             style={{
@@ -140,7 +140,7 @@ class LogPage extends Component {
                   left: 510,
                   width: 10,
                   background: "#FFE3F2",
-                  border: "yellow",
+                  border: "white",
                 }}
                 icon={<NotificationOutlined style={{ fontSize: "30px" }} />}
                 size="large"
@@ -157,8 +157,8 @@ class LogPage extends Component {
                   <ShelterInfo />
                 </Route>
                 <Route path="/">
-                  <Button type="primary" onClick={this.handleChangeMap}>
-                    ClickMe
+                  <Button style={{background: "#FFE3F2", border: "#000000"}}  onClick={this.handleChangeMap}>
+                  <span style={{color: "#000000"}}>Clickme</span>
                   </Button>
                   <MapTemp
                     pagename={this.props.pagename}
@@ -177,7 +177,7 @@ class LogPage extends Component {
             loading={loading}
             onChange={this.handleTableChange}
           />
-          <Footer style={{ textAlign: "center" }}>Design by Hanabi</Footer>
+          <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>Design by Hanabi</Footer>
         </Layout>
       </Router>
     );

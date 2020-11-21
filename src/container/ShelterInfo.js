@@ -106,7 +106,7 @@ class ShelterPage extends Component {
       }
     }
     return (
-      <div>
+      <div style={{background: "#FFFFFF"}}>
         <Header
           className="site-layout-sub-header-background"
           style={{
@@ -121,8 +121,8 @@ class ShelterPage extends Component {
         </Header>
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
-            <Button type="primary" onClick={this.handleChangeMap}>
-              ClickMe
+          <Button style={{background: "#FFE3F2", border: "#000000"}} onClick={this.handleChangeMap}>
+                  <span style={{color: "#000000"}}>Clickme</span>
             </Button>
             <MapTemp
               pagename={this.props.pagename}
@@ -139,7 +139,7 @@ class ShelterPage extends Component {
           loading={loading}
           onChange={this.handleTableChange}
         />
-        <Footer style={{ textAlign: "center" }}>Design by Hanabi</Footer>
+        <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>Design by Hanabi</Footer>
       </div>
       // </Layout>
     );
