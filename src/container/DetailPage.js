@@ -42,7 +42,7 @@ class DetailPage extends Component {
     ];
     const data_jishin = noti.map((obj) => {
       let timeLeft = "";
-      const difference = obj.occure_time - Date.now();
+      const difference = obj.occure_time - Date.now()/1000;
       if (difference > 0) {
         if (difference > 24 * 60 * 60)
           timeLeft = `${Math.floor(difference / 24 / 60 / 60)} days left`;
@@ -84,7 +84,7 @@ class DetailPage extends Component {
     ];
     return (
       <Router>
-        <Layout>
+          <Layout style={{background: "#FFFFFF"}}>
           <Header
             className="site-layout-sub-header-background"
             style={{
@@ -128,7 +128,7 @@ class DetailPage extends Component {
             loading={loading}
             onChange={this.handleTableChange}
           />
-          <Footer style={{ textAlign: "center" }}>Design by Hanabi</Footer>
+          <Footer style={{ textAlign: "center", background: "#ffffff"}}>Design by Hanabi</Footer>
         </Layout>
       </Router>
     );
