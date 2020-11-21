@@ -15,10 +15,10 @@ require("dotenv").config();
 class App extends Component {
   state = {
     user_location: {
-      lat: process.env.DEFAULT_LATITUDE,
-      lng: process.env.DEFAULT_LONGTITUDE,
+      lat: process.env.REACT_APP_DEFAULT_LATITUDE,
+      lng: process.env.REACT_APP_DEFAULT_LONGTITUDE,
     },
-    zoom: process.env.DEFAULT_ZOOM,
+    zoom: process.env.REACT_APP_DEFAULT_ZOOM,
   };
   componentDidMount = () => {
     navigator.geolocation.getCurrentPosition((position) => {
