@@ -37,6 +37,17 @@ const menu = (
     </Menu.Item>
   </Menu>
 );
+function changeDate(this_date) {
+  var return_date = '';
+    return_date = this_date.getHours().toString() + ":" +
+                  this_date.getMinutes().toString() + ":" +
+                  this_date.getSeconds().toString() + " " +
+                  this_date.getDate().toString() + "/" +
+                  this_date.getMonth().toString() + "/" +
+                  this_date.getFullYear().toString() ;
+
+    return return_date;
+}
 class LogPage extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +64,6 @@ class LogPage extends Component {
       },
     };
   }
-
   componentDidMount() {
     axios
       .get("https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/log")
@@ -72,7 +82,8 @@ class LogPage extends Component {
           }
           return {
             id: obj.id,
-            occure_time: `${new Date(obj.occure_time * 1000).toString()} ${
+            occure_time: `
+            ${changeDate(new Date(obj.occure_time * 1000))} ${
               timeLeft ? "- " + timeLeft : ""
             }`,
             place: obj.place,
@@ -157,9 +168,6 @@ class LogPage extends Component {
                   <ShelterInfo />
                 </Route>
                 <Route path="/">
-                  <Button style={{background: "#FFE3F2", border: "#000000"}}  onClick={this.handleChangeMap}>
-                  <span style={{color: "#000000"}}>Clickme</span>
-                  </Button>
                   <MapTemp
                     pagename={this.props.pagename}
                     default_center={this.props.user_location}

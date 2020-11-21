@@ -165,9 +165,6 @@ class ShelterPage extends Component {
         </Header>
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
-          <Button style={{background: "#FFE3F2", border: "#000000"}} onClick={this.handleChangeMap}>
-                  <span style={{color: "#000000"}}>Clickme</span>
-            </Button>
             <MapTemp
               pagename={this.props.pagename}
               default_center={this.props.user_location}

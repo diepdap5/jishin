@@ -7,7 +7,17 @@ import { Component } from "react";
 import MapTemp from "./MapTemp";
 import { NotificationOutlined } from "@ant-design/icons";
 const { Header, Content, Footer } = Layout;
+function changeDate(this_date) {
+  var return_date = '';
+    return_date = this_date.getHours().toString() + ":" +
+                  this_date.getMinutes().toString() + ":" +
+                  this_date.getSeconds().toString() + " " +
+                  this_date.getDate().toString() + "/" +
+                  this_date.getMonth().toString() + "/" +
+                  this_date.getFullYear().toString() ;
 
+    return return_date;
+}
 class DetailPage extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +64,7 @@ class DetailPage extends Component {
       }
       return {
         id: obj.id,
-        occure_time: `${new Date(obj.occure_time * 1000).toString()} ${
+        occure_time: `${changeDate(new Date(obj.occure_time * 1000))} ${
           timeLeft ? "- " + timeLeft : ""
         }`,
         place: obj.place,
