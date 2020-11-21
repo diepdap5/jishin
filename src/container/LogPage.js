@@ -1,6 +1,6 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout, Table, Tag, Button, Dropdown, Menu } from "antd";
 import ShelterInfo from "../container/ShelterInfo";
 import { Component } from "react";
