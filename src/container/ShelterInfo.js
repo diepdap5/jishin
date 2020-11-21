@@ -1,14 +1,17 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { Layout, Table, Button } from "antd";
+import { Layout, Table, Button, Result } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
+import SearchField from "react-search-field";
+
 const { Header, Content, Footer } = Layout;
 var distance_shelter;
 var rad = function (x) {
   return (x * Math.PI) / 180;
 };
+
 var getDistance = function (lat1, lng1, lat2, lng2) {
   var R = 6378137; // Earth's mean radius in meter
   var dLat = rad(lat2 - lat1);
@@ -23,6 +26,7 @@ var getDistance = function (lat1, lng1, lat2, lng2) {
   var d = R * c;
   return d; // returns the distance in meter
 };
+
 class ShelterPage extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +43,7 @@ class ShelterPage extends Component {
       },
     };
   }
+
   componentDidMount() {
     axios
       .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
@@ -59,6 +64,7 @@ class ShelterPage extends Component {
         this.setState({ shelters });
       });
   }
+
   handleTableChange = (pagination) => {
     this.setState({
       pagination: {
@@ -66,6 +72,7 @@ class ShelterPage extends Component {
       },
     });
   };
+
   handleChangeMap = () => {
     this.setState({
       config_center: {
@@ -74,6 +81,42 @@ class ShelterPage extends Component {
       },
     });
   };
+
+  handleCenterLocation = (x, y) =>{
+    this.setState({
+      config_center: {
+        lat: x,
+        lng: y,
+      },
+    });
+  }
+
+  onChange = (value, event) => {
+    axios
+      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
+      .then((res) => {
+        const shelters = res.data.filter(shelter=>shelter.name.toLowerCase().includes(value.toLowerCase())).map((obj) => ({
+          id: obj.id,
+          name: obj.name,
+          place: obj.place,
+          coord_lat: obj.coord_lat,
+          coord_lng: obj.coord_lng,
+          distance:getDistance(
+            obj.coord_lat,
+            obj.coord_lng,
+            this.props.user_location.lat,
+            this.props.user_location.lng
+          ).toFixed(4),
+        }));
+        this.setState({ shelters });
+      });
+  }
+
+  selectRow = (record) => {
+    this.handleCenterLocation(record.coord_lat, record.coord_lng);
+    window.location.href = "#";
+  }
+
   render() {
     const { shelters, pagination, loading, config_center } = this.state;
     const columns = [
@@ -105,6 +148,7 @@ class ShelterPage extends Component {
         }
       }
     }
+
     return (
       <div style={{background: "#FFFFFF"}}>
         <Header
@@ -132,12 +176,25 @@ class ShelterPage extends Component {
             />
           </div>
         </Content>
+        
+        <SearchField
+          placeholder="Search..."
+          onChange={this.onChange}
+          onClick={this.onChange}
+          classNames="shelter-search"
+        />
+
         <Table
           columns={columns}
           dataSource={shelters}
           pagination={pagination}
           loading={loading}
           onChange={this.handleTableChange}
+          onRow={(record) => ({
+            onClick: () => {
+              this.selectRow(record);
+            },
+          })}
         />
         <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>Design by Hanabi</Footer>
       </div>
