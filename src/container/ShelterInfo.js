@@ -133,7 +133,11 @@ class ShelterPage extends Component {
       {
         title: "Distance (Unit: m )",
         dataIndex: "distance",
-        key: "shelter_distance",
+        key: "distance",
+        sorter: {
+          compare: (a, b) => a.distance - b.distance,
+          multiple: 1,
+        },
       },
     ];
     var i =0;
