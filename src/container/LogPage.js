@@ -2,7 +2,7 @@ import "antd/dist/antd.css";
 import "../App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout, Table, Tag, Button, Dropdown, Menu } from "antd";
-import ShelterInfo from "../container/ShelterInfo";
+import ShelterInfo from "../container/ShelterPage";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";

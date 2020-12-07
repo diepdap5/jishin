@@ -6,7 +6,8 @@ import { Layout, Menu } from "antd";
 
 import "antd/dist/antd.css";
 import "./App.css";
-import ShelterPage from "./container/ShelterInfo";
+import ShelterPage from "./container/ShelterPage";
+import BuildingPage from "./container/BuildingPage";
 import LogPage from "./container/LogPage";
 import DetailPage from "./container/DetailPage";
 const { Sider } = Layout;
@@ -62,6 +63,9 @@ class App extends Component {
                     <Menu.Item key="2" icon={<NotificationOutlined />}>
                       <Link to="/shelter">避難所情報</Link>
                     </Menu.Item>
+                    <Menu.Item key="3" icon={<NotificationOutlined />}>
+                      <Link to="/building">建物情報</Link>
+                    </Menu.Item>
                   </Menu>
                 </Sider>
                 <Layout style={{ padding: "0 24px 24px" }}>
@@ -73,6 +77,9 @@ class App extends Component {
                   </Route>
                   <Route exec path="/detail/:id">
                     <DetailPage user_location={this.state.user_location} />
+                  </Route>
+                  <Route exact path="/building">
+                    <BuildingPage user_location={this.state.user_location} />
                   </Route>
                 </Layout>
               </Layout>
