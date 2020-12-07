@@ -15,6 +15,7 @@ import Login from "./component/Login/Login";
 const { Sider } = Layout;
 require("dotenv").config();
 
+const { SubMenu } = Menu;
 class App extends Component {
   state = {
     user_location: {
@@ -64,12 +65,16 @@ class App extends Component {
                     <Menu.Item key="1" icon={<HomeOutlined />}>
                       <Link to="/">地震情報</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<NotificationOutlined />}>
+                    <SubMenu key="2" icon={<NotificationOutlined />} title="避難所" style={{ background: "#FFE3F2" }} >
+                      <Menu.Item key="shelter" icon={<NotificationOutlined />}  ><Link to="/shelter">避難所情報</Link></Menu.Item>
+                      <Menu.Item key="shelter/building" icon={<NotificationOutlined />}   ><Link to="/shelter/building">建物情報</Link></Menu.Item>
+                    </SubMenu>
+                    {/* <Menu.Item key="2" icon={<NotificationOutlined />}>
                       <Link to="/shelter">避難所情報</Link>
                     </Menu.Item>
                     <Menu.Item key="3" icon={<NotificationOutlined />}>
                       <Link to="/building">建物情報</Link>
-                    </Menu.Item>
+                    </Menu.Item> */}
                   </Menu>
                   <Login />
                   <SignUp />
@@ -84,7 +89,7 @@ class App extends Component {
                   <Route exec path="/detail/:id">
                     <DetailPage user_location={this.state.user_location} />
                   </Route>
-                  <Route exact path="/building">
+                  <Route exact path="/shelter/building">
                     <BuildingPage user_location={this.state.user_location} />
                   </Route>
                 </Layout>
