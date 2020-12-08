@@ -11,8 +11,28 @@ class SimpleMap extends Component {
     },
     zoom: 11
   };
+  renderDirection(map, maps) {
+    const directionsService = new maps.DirectionsService();
+			const directionsDisplay = new maps.DirectionsRenderer();
+			directionsService.route({
+				origin: '21.01975, 105.835621',
+				destination: '20.995696, 105.807828',
+				travelMode: maps.DirectionsTravelMode.DRIVING
+			}, (response, status) => {
+				if (status === 'OK') {
+					directionsDisplay.setDirections(response);
+          console.log(response.routes[0]);
+          const routePolyline = new maps.Polyline({
+            path: response.routes[0].overview_path
+          });
+          routePolyline.setMap(map);
+				} else {
+					window.alert('Directions request failed due to ' + status);
+				}
+			});
+  }
   render() {
-    return (
+    return ( 
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
         <GoogleMapReact
@@ -20,7 +40,10 @@ class SimpleMap extends Component {
           center={this.props.center}
           defaultZoom={this.props.zoom}
           yesIWantToUseGoogleMapApiInternals={true}
+          onGoogleApiLoaded={({ map, maps }) => this.renderDirection(map, maps)}
         >
+          
+        
           <Marker
             lat={this.props.center.lat}
             lng={this.props.center.lng}
@@ -28,6 +51,12 @@ class SimpleMap extends Component {
             color="blue"
             tooltip = "You're here"
           />
+          <Marker
+            name="You're here"
+            color="blue"
+            tooltip = "You're here"
+          />
+          
           
           {this.props.data.map(function (this_data, index) {
             if (this_data.name) {

@@ -10,6 +10,8 @@ import ShelterPage from "./container/ShelterPage";
 import BuildingPage from "./container/BuildingPage";
 import LogPage from "./container/LogPage";
 import DetailPage from "./container/DetailPage";
+import SignUp from "./component/SignUp/SignUp";
+import Login from "./component/Login/Login";
 const { Sider } = Layout;
 require("dotenv").config();
 
@@ -22,6 +24,7 @@ class App extends Component {
     },
     zoom: process.env.REACT_APP_DEFAULT_ZOOM,
   };
+
   componentDidMount = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
@@ -32,6 +35,7 @@ class App extends Component {
       });
     });
   };
+
   render() {
     return (
       <div className="App">
@@ -72,6 +76,8 @@ class App extends Component {
                       <Link to="/building">建物情報</Link>
                     </Menu.Item> */}
                   </Menu>
+                  <Login />
+                  <SignUp />
                 </Sider>
                 <Layout style={{ padding: "0 24px 24px" }}>
                   <Route exact path="/">

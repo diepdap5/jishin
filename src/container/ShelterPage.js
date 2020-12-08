@@ -1,13 +1,13 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { Layout, Table, Button, Result } from "antd";
+import { Layout, Table, Button, Dropdown, Menu, message } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import SearchField from "react-search-field";
+import { DownOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
-var distance_shelter;
 var rad = function (x) {
   return (x * Math.PI) / 180;
 };
@@ -19,14 +19,32 @@ var getDistance = function (lat1, lng1, lat2, lng2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(rad(lat1)) *
-      Math.cos(rad(lat2)) *
-      Math.sin(dLong / 2) *
-      Math.sin(dLong / 2);
+    Math.cos(rad(lat2)) *
+    Math.sin(dLong / 2) *
+    Math.sin(dLong / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c;
   return d; // returns the distance in meter
 };
 
+var getDistrict = function (place) {
+  var place_list = place.split(",");
+  var district = " ";
+  district = place_list[place_list.length - 3];
+  return district;
+};
+var getCity = function (place) {
+  var place_list = place.split(",");
+  var city = "";
+  city = place_list[place_list.length - 2];
+  return city;
+};
+var getAddress = function (place) {
+  var place_list = place.split(",");
+  var address = "";
+  address = place_list[0];
+  return address;
+};
 class ShelterPage extends Component {
   constructor(props) {
     super(props);
@@ -51,10 +69,12 @@ class ShelterPage extends Component {
         const shelters = res.data.map((obj) => ({
           id: obj.id,
           name: obj.name,
-          place: obj.place,
+          place: getAddress(obj.place),
           coord_lat: obj.coord_lat,
           coord_lng: obj.coord_lng,
-          distance:getDistance(
+          district: getDistrict(obj.place),
+          city: getCity(obj.place),
+          distance: getDistance(
             obj.coord_lat,
             obj.coord_lng,
             this.props.user_location.lat,
@@ -82,7 +102,7 @@ class ShelterPage extends Component {
     });
   };
 
-  handleCenterLocation = (x, y) =>{
+  handleCenterLocation = (x, y) => {
     this.setState({
       config_center: {
         lat: x,
@@ -95,13 +115,15 @@ class ShelterPage extends Component {
     axios
       .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
       .then((res) => {
-        const shelters = res.data.filter(shelter=>shelter.name.toLowerCase().includes(value.toLowerCase())).map((obj) => ({
+        const shelters = res.data.filter(shelter => shelter.name.toLowerCase().includes(value.toLowerCase())).map((obj) => ({
           id: obj.id,
           name: obj.name,
-          place: obj.place,
+          place: getAddress(obj.place),
           coord_lat: obj.coord_lat,
           coord_lng: obj.coord_lng,
-          distance:getDistance(
+          district: getDistrict(obj.place),
+          city: getCity(obj.place),
+          distance: getDistance(
             obj.coord_lat,
             obj.coord_lng,
             this.props.user_location.lat,
@@ -110,6 +132,29 @@ class ShelterPage extends Component {
         }));
         this.setState({ shelters });
       });
+  }
+  onChangeCity = (event) => {
+    axios
+      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
+      .then((res) => {
+        const shelters = res.data.filter(shelter => shelter.place.toLowerCase().includes(event.key.toLowerCase())).map((obj) => ({
+          id: obj.id,
+          name: obj.name,
+          place: getAddress(obj.place),
+          coord_lat: obj.coord_lat,
+          coord_lng: obj.coord_lng,
+          district: getDistrict(obj.place),
+          city: getCity(obj.place),
+          distance: getDistance(
+            obj.coord_lat,
+            obj.coord_lng,
+            this.props.user_location.lat,
+            this.props.user_location.lng
+          ).toFixed(4),
+        }));
+        this.setState({ shelters });
+      });
+      message.info(event.key);
   }
 
   selectRow = (record) => {
@@ -131,6 +176,16 @@ class ShelterPage extends Component {
         key: "shelter_place",
       },
       {
+        title: "District",
+        dataIndex: "district",
+        key: "district",
+      },
+      {
+        title: "City",
+        dataIndex: "city",
+        key: "city",
+      },
+      {
         title: "Distance (Unit: m )",
         dataIndex: "distance",
         key: "distance",
@@ -140,21 +195,33 @@ class ShelterPage extends Component {
         },
       },
     ];
-    var i =0;
+    var i = 0;
     var j;
     var tmp = {};
-    for (i=0;i<shelters.length-1;i++){
-      for(j=0;j<shelters.length-1-i;j++){
-        if(shelters[j].distance>shelters[j+1].distance){
+    for (i = 0; i < shelters.length - 1; i++) {
+      for (j = 0; j < shelters.length - 1 - i; j++) {
+        if (shelters[j].distance > shelters[j + 1].distance) {
           tmp = shelters[j];
-          shelters[j]=shelters[j+1];
-          shelters[j+1]=tmp;
+          shelters[j] = shelters[j + 1];
+          shelters[j + 1] = tmp;
         }
       }
     }
-
+    const menu = (
+      <Menu onClick={this.onChangeCity} >
+        <Menu.Item key="Hà Nội" >
+          Hà Nội
+        </Menu.Item>
+        <Menu.Item key="Bắc Ninh" >
+          Bắc Ninh
+        </Menu.Item>
+        <Menu.Item key="Hải Phòng">
+          Hải Phòng
+        </Menu.Item>
+      </Menu>
+    );
     return (
-      <div style={{background: "#FFFFFF"}}>
+      <div style={{ background: "#FFFFFF" }}>
         <Header
           className="site-layout-sub-header-background"
           style={{
@@ -177,13 +244,18 @@ class ShelterPage extends Component {
             />
           </div>
         </Content>
-        
+
         <SearchField
           placeholder="Search..."
           onChange={this.onChange}
           onClick={this.onChange}
           classNames="shelter-search"
         />
+        <Dropdown overlay={menu}>
+          <Button>
+            Find <DownOutlined />
+          </Button>
+        </Dropdown>
 
         <Table
           columns={columns}
@@ -197,7 +269,7 @@ class ShelterPage extends Component {
             },
           })}
         />
-        <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>Design by Hanabi</Footer>
+        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>Design by Hanabi</Footer>
       </div>
       // </Layout>
     );
