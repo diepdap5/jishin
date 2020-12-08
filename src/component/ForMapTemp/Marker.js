@@ -2,7 +2,7 @@ import React from 'react';
 import './Marker.css';
 import ReactTooltip from "react-tooltip";
 
-const Marker = (props) => {
+const MarkerPin = (props) => {
     const { color, name, tooltip } = props;
 
     return (
@@ -20,4 +20,4 @@ const Marker = (props) => {
     );
   };
 
-export default Marker;
+export default MarkerPin;
