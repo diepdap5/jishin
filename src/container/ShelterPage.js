@@ -1,7 +1,6 @@
 import "antd/dist/antd.css";
 import "../App.css";
 import { Layout, Table, Button, Dropdown, Menu, message } from "antd";
-// import Highlighter from 'react-highlight-words';
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
