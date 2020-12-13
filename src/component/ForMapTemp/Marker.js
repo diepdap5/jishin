@@ -1,6 +1,7 @@
 import React from 'react';
 import './Marker.css';
 import ReactTooltip from "react-tooltip";
+import { Button } from 'antd';
 
 const MarkerPin = (props) => {
     const { color, name, tooltip } = props;
@@ -15,7 +16,7 @@ const MarkerPin = (props) => {
           />
           <div className="pulse" />
         </a>
-        <ReactTooltip place="top" type="dark" effect="float" multiline={true}/>
+        <ReactTooltip place="top"  effect="solid" multiline={true} clickable={true}/>
       </div>
     );
   };
