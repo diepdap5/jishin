@@ -19,6 +19,7 @@
     "react-google-maps": "^9.4.5",
     "react-highlight-words": "^0.16.0",
     "react-hoverbox": "^1.0.900",
+    "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-search-field": "^1.1.0",

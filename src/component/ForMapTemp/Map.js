@@ -1,6 +1,7 @@
 import MarkerPin from './Marker';
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import { Marker, InfoWindow } from "@react-google-maps/api";
 // import axios from "axios";
 require('dotenv').config()
 class SimpleMap extends Component {
@@ -33,6 +34,11 @@ class SimpleMap extends Component {
       });
     }
   }
+  // handleToggle = () => {
+  //   this.setState({
+  //     isOpen: !false
+  //   });
+  // }
   render() {
     return (
       // Important! Always set the container height explicitly
@@ -55,17 +61,29 @@ class SimpleMap extends Component {
             tooltip="You're here"
           />
           {this.props.data.map(function (this_data, index) {
-            if (this_data.name) {
+            if (this_data.name && this_data.image_link) {
+              console.log(this_data.name);
+              console.log(this_data.image_link);
               return (
                 <MarkerPin
                   lat={this_data.coord_lat}
                   lng={this_data.coord_lng}
                   name={this_data.name}
                   color="green"
-                  tooltip={this_data.name + "\n" + this_data.place}
+                  tooltip={this_data.name + "\n" + this_data.place + "<img src='" + this_data.image_link +"' width =300 height =200 />"  }
                 />
               );
-            } else {
+            }else if(this_data.name && !this_data.image_link){
+              return (
+                <MarkerPin
+                  lat={this_data.coord_lat}
+                  lng={this_data.coord_lng}
+                  name={this_data.name}
+                  color="green"
+                  tooltip={this_data.name + "\n" + this_data.place }
+                />
+              );
+            }else {
               return (
                 <MarkerPin
                   lat={this_data.coord_lat}
