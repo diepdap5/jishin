@@ -5,6 +5,7 @@ import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import SearchField from "react-search-field";
+import { Link } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 var distance_building;
@@ -126,6 +127,7 @@ class BuildingPage extends Component {
         title: "Name",
         dataIndex: "name",
         key: "building_name",
+      render: text => (<div><Link to={`/building/` + (buildings.find(x => x.name === text).id -1).toString()}>{text}</Link></div>),
       },
       {
         title: "Place",

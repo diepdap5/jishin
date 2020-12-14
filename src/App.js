@@ -10,6 +10,7 @@ import ShelterPage from "./container/ShelterPage";
 import BuildingPage from "./container/BuildingPage";
 import LogPage from "./container/LogPage";
 import DetailPage from "./container/DetailPage";
+import BuildingDetail from "./container/DetailInformation/BuildingDetail";
 import SignUp from "./component/SignUp/SignUp";
 import Login from "./component/Login/Login";
 const { Sider } = Layout;
@@ -67,14 +68,8 @@ class App extends Component {
                     </Menu.Item>
                     <SubMenu key="2" icon={<NotificationOutlined />} title="避難所" style={{ background: "#FFE3F2" }} >
                       <Menu.Item key="shelter" icon={<NotificationOutlined />}  ><Link to="/shelter">避難所情報</Link></Menu.Item>
-                      <Menu.Item key="shelter/building" icon={<NotificationOutlined />}   ><Link to="/shelter/building">建物情報</Link></Menu.Item>
+                      <Menu.Item key="building" icon={<NotificationOutlined />}   ><Link to="/building">建物情報</Link></Menu.Item>
                     </SubMenu>
-                    {/* <Menu.Item key="2" icon={<NotificationOutlined />}>
-                      <Link to="/shelter">避難所情報</Link>
-                    </Menu.Item>
-                    <Menu.Item key="3" icon={<NotificationOutlined />}>
-                      <Link to="/building">建物情報</Link>
-                    </Menu.Item> */}
                   </Menu>
                   <Login />
                   <SignUp />
@@ -89,9 +84,13 @@ class App extends Component {
                   <Route exec path="/detail/:id">
                     <DetailPage user_location={this.state.user_location} />
                   </Route>
-                  <Route exact path="/shelter/building">
+                  <Route exact path="/building">
                     <BuildingPage user_location={this.state.user_location} />
                   </Route>
+                  <Route exact path="/building/:building_id">
+                    <BuildingDetail user_location={this.state.user_location} />
+                  </Route>
+                  {/* <Route path="/building/:building_id" component={BuildingDetail}/> */}
                 </Layout>
               </Layout>
             </Route>
