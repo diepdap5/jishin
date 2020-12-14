@@ -1,6 +1,6 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Layout, Table, Tag, Button, Dropdown, Menu } from "antd";
 import ShelterInfo from "../container/ShelterPage";
 import { Component } from "react";
@@ -11,17 +11,17 @@ const { Header, Content, Footer } = Layout;
 const menu = (
   <Menu>
     <Menu.Item key="0">
-      <a href="/detail/6">
-        <button
-          style={{
-            background: "white",
-            border: "white",
-          }}
-          onClick={() => window.location.reload(false)}
-        >
+      <button
+        style={{
+          background: "white",
+          border: "white",
+        }}
+        onClick={() => window.location.reload(false)}
+      >
+        <Link to="/detail/noti">
           New earthquake announcement: Thai Binh, Viet Nam
-        </button>
-      </a>
+        </Link>
+      </button>
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="1" disabled>
@@ -38,15 +38,21 @@ const menu = (
   </Menu>
 );
 function changeDate(this_date) {
-  var return_date = '';
-    return_date = this_date.getHours().toString() + ":" +
-                  this_date.getMinutes().toString() + ":" +
-                  this_date.getSeconds().toString() + " " +
-                  this_date.getDate().toString() + "/" +
-                  this_date.getMonth().toString() + "/" +
-                  this_date.getFullYear().toString() ;
+  var return_date = "";
+  return_date =
+    this_date.getHours().toString() +
+    ":" +
+    this_date.getMinutes().toString() +
+    ":" +
+    this_date.getSeconds().toString() +
+    " " +
+    this_date.getDate().toString() +
+    "/" +
+    this_date.getMonth().toString() +
+    "/" +
+    this_date.getFullYear().toString();
 
-    return return_date;
+  return return_date;
 }
 class LogPage extends Component {
   constructor(props) {
@@ -70,7 +76,7 @@ class LogPage extends Component {
       .then((res) => {
         const posts = res.data.map((obj) => {
           let timeLeft = "";
-          const difference = obj.occure_time - Date.now() /1000;
+          const difference = obj.occure_time - Date.now() / 1000;
           if (difference > 0) {
             if (difference > 24 * 60 * 60)
               timeLeft = `${Math.floor(difference / 24 / 60 / 60)} days left`;
@@ -131,9 +137,14 @@ class LogPage extends Component {
         render: (text) => <Tag color="red">{text}</Tag>,
       },
     ];
+    var i = 0;
+    var jishin_data = [];
+    for (i = 0; i < posts.length - 1; i++) {
+      jishin_data[i] = posts[i];
+    }
     return (
       <Router>
-        <Layout style={{background: "#FFFFFF"}}>
+        <Layout style={{ background: "#FFFFFF" }}>
           <Header
             className="site-layout-sub-header-background"
             style={{
@@ -172,7 +183,7 @@ class LogPage extends Component {
                     pagename={this.props.pagename}
                     default_center={this.props.user_location}
                     config_center={config_center}
-                    data={posts}
+                    data={jishin_data}
                   />
                 </Route>
               </Switch>
@@ -180,12 +191,14 @@ class LogPage extends Component {
           </Content>
           <Table
             columns={columns}
-            dataSource={posts}
+            dataSource={jishin_data}
             pagination={pagination}
             loading={loading}
             onChange={this.handleTableChange}
           />
-          <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>Design by Hanabi</Footer>
+          <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>
+            Design by Hanabi
+          </Footer>
         </Layout>
       </Router>
     );
