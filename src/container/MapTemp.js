@@ -10,7 +10,9 @@ class MapTemp extends Component {
       <div className="App">
         <SimpleMap 
         center={this.props.config_center.lat == null ? this.props.default_center : this.props.config_center} 
-        data = {this.props.data}/>
+        data = {this.props.data}
+        defaultZoom={this.props.zoom}
+        destination = {this.props.destination}/>
       </div>
     );
   }

@@ -11,6 +11,7 @@ import BuildingPage from "./container/BuildingPage";
 import LogPage from "./container/LogPage";
 import DetailPage from "./container/DetailPage";
 import BuildingDetail from "./container/DetailInformation/BuildingDetail";
+import ShelterDetail from "./container/DetailInformation/ShelterDetail";
 import SignUp from "./component/SignUp/SignUp";
 import Login from "./component/Login/Login";
 const { Sider } = Layout;
@@ -89,6 +90,9 @@ class App extends Component {
                   </Route>
                   <Route exact path="/building/:building_id">
                     <BuildingDetail user_location={this.state.user_location} />
+                  </Route>
+                  <Route exact path="/shelter/:shelter_id">
+                    <ShelterDetail user_location={this.state.user_location} />
                   </Route>
                   {/* <Route path="/building/:building_id" component={BuildingDetail}/> */}
                 </Layout>

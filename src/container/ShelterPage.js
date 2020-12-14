@@ -6,6 +6,8 @@ import MapTemp from "./MapTemp";
 import axios from "axios";
 import SearchField from "react-search-field";
 import { DownOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
+
 
 const { Header, Content, Footer } = Layout;
 var rad = function (x) {
@@ -169,6 +171,7 @@ class ShelterPage extends Component {
         title: "Name",
         dataIndex: "name",
         key: "shelter_name",
+        render: text => (<div><Link to={`/shelter/` + (shelters.find(x => x.name === text).id -1).toString()}>{text}</Link></div>),
       },
       {
         title: "Place",

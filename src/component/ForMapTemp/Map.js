@@ -11,25 +11,27 @@ class SimpleMap extends Component {
     },
     zoom: 11
   };
-  renderDirection(map, maps) {
-    const directionsService = new maps.DirectionsService();
-    const directionsDisplay = new maps.DirectionsRenderer();
-    directionsService.route({
-      origin: '21.01975, 105.835621',
-      destination: '20.995696, 105.807828',
-      travelMode: maps.DirectionsTravelMode.DRIVING
-    }, (response, status) => {
-      if (status === 'OK') {
-        directionsDisplay.setDirections(response);
-        console.log(response.routes[0]);
-        const routePolyline = new maps.Polyline({
-          path: response.routes[0].overview_path
-        });
-        routePolyline.setMap(map);
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });
+  renderDirection(map, maps, coord_origin, coord_des) {
+    if ((coord_origin != null) && (coord_des != null)) {
+      const directionsService = new maps.DirectionsService();
+      const directionsDisplay = new maps.DirectionsRenderer();
+      directionsService.route({
+        origin: coord_origin,
+        destination: coord_des,
+        travelMode: maps.DirectionsTravelMode.DRIVING
+      }, (response, status) => {
+        if (status === 'OK') {
+          directionsDisplay.setDirections(response);
+          console.log(response.routes[0]);
+          const routePolyline = new maps.Polyline({
+            path: response.routes[0].overview_path
+          });
+          routePolyline.setMap(map);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
+    }
   }
   render() {
     return (
@@ -40,10 +42,10 @@ class SimpleMap extends Component {
           center={this.props.center}
           defaultZoom={this.props.zoom}
           yesIWantToUseGoogleMapApiInternals={true}
-          // onGoogleApiLoaded={({ map, maps }) => {
-          //   this.renderDirection(map, maps);
-          // }}
-          
+          onGoogleApiLoaded={({ map, maps }) => {
+            this.renderDirection(map, maps, this.props.center, this.props.destination);
+          }}
+
         >
           <MarkerPin
             lat={this.props.center.lat}
