@@ -3,13 +3,15 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { HomeOutlined, NotificationOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-
+import { FaBuilding} from "react-icons/fa";
+import { MdPlace} from "react-icons/md";
 import "antd/dist/antd.css";
 import "./App.css";
 import ShelterPage from "./container/ShelterPage";
 import BuildingPage from "./container/BuildingPage";
 import LogPage from "./container/LogPage";
 import DetailPage from "./container/DetailPage";
+// import DetailPage from "./container/DetailInformation/EarthQuakeDetail"
 import BuildingDetail from "./container/DetailInformation/BuildingDetail";
 import SignUp from "./component/SignUp/SignUp";
 import Login from "./component/Login/Login";
@@ -67,8 +69,8 @@ class App extends Component {
                       <Link to="/">地震情報</Link>
                     </Menu.Item>
                     <SubMenu key="2" icon={<NotificationOutlined />} title="避難所" style={{ background: "#FFE3F2" }} >
-                      <Menu.Item key="shelter" icon={<NotificationOutlined />}  ><Link to="/shelter">避難所情報</Link></Menu.Item>
-                      <Menu.Item key="building" icon={<NotificationOutlined />}   ><Link to="/building">建物情報</Link></Menu.Item>
+                      <Menu.Item key="shelter" icon={<MdPlace />}  ><Link to="/shelter">避難所情報</Link></Menu.Item>
+                      <Menu.Item key="building" icon={<FaBuilding />}   ><Link to="/building">建物情報</Link></Menu.Item>
                     </SubMenu>
                   </Menu>
                   <Login />
@@ -81,7 +83,7 @@ class App extends Component {
                   <Route exact path="/shelter">
                     <ShelterPage user_location={this.state.user_location} />
                   </Route>
-                  <Route exec path="/detail/:id">
+                  <Route exec path="/detail/noti">
                     <DetailPage user_location={this.state.user_location} />
                   </Route>
                   <Route exact path="/building">

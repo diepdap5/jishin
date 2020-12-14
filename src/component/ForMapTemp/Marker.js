@@ -16,7 +16,7 @@ const MarkerPin = (props) => {
           />
           <div className="pulse" />
         </a>
-        <ReactTooltip place="top"  effect="solid" multiline={true} clickable={true}/>
+        <ReactTooltip html={true} place="top"  effect="solid" multiline={true} clickable={true}/>
       </div>
     );
   };
