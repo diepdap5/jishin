@@ -191,6 +191,7 @@ class ShelterPage extends Component {
       {
         title: "Distance (Unit: m )",
         dataIndex: "distance",
+        defaultSortOrder: 'ascend',
         key: "distance",
         sorter: {
           compare: (a, b) => a.distance - b.distance,
