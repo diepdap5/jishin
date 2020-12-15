@@ -92,12 +92,12 @@
   color: #81004B !important;
 }
 
-.ant-pagination-item {
+.ant-pagination-item-active {
   border-color: #81004B!important;
 }
 
 .ant-pagination-next :hover{
-  color: #81004B !important;
+  /* color: #81004B !important; */
   border-color: #81004B !important;
 }
 
