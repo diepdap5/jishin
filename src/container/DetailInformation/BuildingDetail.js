@@ -71,6 +71,7 @@ class BuildingDetail extends Component {
           place: getAddress(obj.place),
           coord_lat: obj.coord_lat,
           coord_lng: obj.coord_lng,
+          image_link: obj.image_link,
           district: getDistrict(obj.place),
           city: getCity(obj.place),
           distance: getDistance(
@@ -90,6 +91,7 @@ class BuildingDetail extends Component {
             district: buildings[user_id].district,
             city: buildings[user_id].city,
             distance: buildings[user_id].distance,
+            image_link: buildings[user_id].image_link,
           },] });
       });
   }
