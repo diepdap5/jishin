@@ -7,6 +7,7 @@ import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import { NotificationOutlined } from "@ant-design/icons";
+import { AiOutlineUser } from "react-icons/ai";
 const { Header, Content, Footer } = Layout;
 const menu = (
   <Menu>
@@ -34,6 +35,27 @@ const menu = (
     <Menu.Divider />
     <Menu.Item key="3" disabled>
       New earthquake announcement:Mexico City, Mexico
+    </Menu.Item>
+  </Menu>
+);
+const user_menu = (
+  <Menu>
+    <Menu.Item key="0">
+      <a href="/detail/6">
+        <button
+          style={{
+            background: "white",
+            border: "white",
+          }}
+          onClick={() => window.location.reload(false)}
+        >
+          Log In
+        </button>
+      </a>
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="1" disabled>
+      Sign Up
     </Menu.Item>
   </Menu>
 );
@@ -165,6 +187,21 @@ class LogPage extends Component {
                   border: "white",
                 }}
                 icon={<NotificationOutlined style={{ fontSize: "30px" }} />}
+                size="large"
+              >
+                <span className="badge ">1</span>
+                {/* bottomRight */}
+              </Button>
+            </Dropdown>
+            <Dropdown overlay={user_menu} placement="bottomCenter">
+              <Button
+                style={{
+                  left: 550,
+                  width: 10,
+                  background: "#FFE3F2",
+                  border: "white",
+                }}
+                icon={<AiOutlineUser style={{ fontSize: "30px" }} />}
                 size="large"
               >
                 <span className="badge ">1</span>
