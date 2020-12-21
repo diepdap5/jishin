@@ -1,8 +1,6 @@
 import MarkerPin from './Marker';
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import { Marker, InfoWindow } from "@react-google-maps/api";
-// import axios from "axios";
 require('dotenv').config()
 class SimpleMap extends Component {
   static defaultProps = {
@@ -12,13 +10,12 @@ class SimpleMap extends Component {
     },
     zoom: 11
   };
-  renderDirection(map, maps, coord_origin, coord_des) {
-    if ((coord_origin != null) && (coord_des != null)) {
+  renderDirection(map, maps) { 
       const directionsService = new maps.DirectionsService();
       const directionsDisplay = new maps.DirectionsRenderer();
       directionsService.route({
-        origin: coord_origin,
-        destination: coord_des,
+        origin: this.props.center,
+        destination: this.props.destination,
         travelMode: maps.DirectionsTravelMode.DRIVING
       }, (response, status) => {
         if (status === 'OK') {
@@ -32,13 +29,7 @@ class SimpleMap extends Component {
           window.alert('Directions request failed due to ' + status);
         }
       });
-    }
   }
-  // handleToggle = () => {
-  //   this.setState({
-  //     isOpen: !false
-  //   });
-  // }
   render() {
     return (
       // Important! Always set the container height explicitly
@@ -47,9 +38,11 @@ class SimpleMap extends Component {
           bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY }}
           center={this.props.center}
           defaultZoom={this.props.zoom}
-          yesIWantToUseGoogleMapApiInternals={true}
           onGoogleApiLoaded={({ map, maps }) => {
-            this.renderDirection(map, maps, this.props.center, this.props.destination);
+            if(this.props.destination!= null){
+              this.renderDirection(map, maps);
+            }
+            
           }}
 
         >
@@ -62,8 +55,6 @@ class SimpleMap extends Component {
           />
           {this.props.data.map(function (this_data, index) {
             if (this_data.name && this_data.image_link) {
-              console.log(this_data.name);
-              console.log(this_data.image_link);
               return (
                 <MarkerPin
                   lat={this_data.coord_lat}

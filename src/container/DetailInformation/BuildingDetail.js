@@ -4,45 +4,10 @@ import { Component } from "react";
 import MapTemp from "../MapTemp";
 import axios from "axios";
 import { withRouter } from 'react-router-dom';
+import {getDistance, getDistrict, getCity, getAddress} from "../../component/ForGetTable/getData"
+
 
 const { Header, Content, Footer } = Layout;
-var rad = function (x) {
-  return (x * Math.PI) / 180;
-};
-
-var getDistance = function (lat1, lng1, lat2, lng2) {
-  var R = 6378137; // Earth's mean radius in meter
-  var dLat = rad(lat2 - lat1);
-  var dLong = rad(lng2 - lng1);
-  var a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(rad(lat1)) *
-    Math.cos(rad(lat2)) *
-    Math.sin(dLong / 2) *
-    Math.sin(dLong / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c;
-  return d; // returns the distance in meter
-};
-
-var getDistrict = function (place) {
-  var place_list = place.split(",");
-  var district = " ";
-  district = place_list[place_list.length - 3];
-  return district;
-};
-var getCity = function (place) {
-  var place_list = place.split(",");
-  var city = "";
-  city = place_list[place_list.length - 2];
-  return city;
-};
-var getAddress = function (place) {
-  var place_list = place.split(",");
-  var address = "";
-  address = place_list[0];
-  return address;
-};
 class BuildingDetail extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +19,10 @@ class BuildingDetail extends Component {
       },
       loading: false,
       config_center: {
+        lat: null,
+        lng: null,
+      },
+      coord_des: {
         lat: null,
         lng: null,
       },
@@ -93,6 +62,11 @@ class BuildingDetail extends Component {
             distance: buildings[user_id].distance,
             image_link: buildings[user_id].image_link,
           },] });
+          this.setState({coord_des:
+            {
+              lat: buildings[user_id].coord_lat,
+              lng: buildings[user_id].coord_lng,
+            }});
       });
   }
   handleTableChange = (pagination) => {
@@ -155,6 +129,8 @@ class BuildingDetail extends Component {
               default_center={this.props.user_location}
               config_center={config_center}
               data={this.state.building}
+              destination = {this.state.coord_des}
+              zoom ={20}
             />
           </div>
         </Content>
@@ -168,7 +144,6 @@ class BuildingDetail extends Component {
         />
         <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>Design by Hanabi</Footer>
       </div>
-      // </Layout>
     );
   }
 }
