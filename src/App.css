@@ -110,3 +110,18 @@
   background: #fff !important;
 }
 
+.ant-menu-submenu-selected{
+  color: #81004B;
+}
+
+.ant-menu-submenu :hover{
+  color: #81004B !important;
+}
+
+.ant-menu-submenu-arrow:before {
+  background: #81004B !important;
+}
+
+.ant-menu-submenu-arrow:after {
+  background:  #81004B !important;
+}
