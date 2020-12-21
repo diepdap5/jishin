@@ -1,11 +1,9 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { Layout, Table, Button, Dropdown, Menu, message } from "antd";
+import { Layout, Table } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
-import SearchField from "react-search-field";
-import { DownOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 
 
@@ -47,15 +45,12 @@ var getAddress = function (place) {
   address = place_list[0];
   return address;
 };
-class ShelterPage extends Component {
+
+class RecommendPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shelters: [],
-      pagination: {
-        current: 1,
-        pageSize: 3,
-      },
+      places: [],
       loading: false,
       config_center: {
         lat: null,
@@ -69,7 +64,7 @@ class ShelterPage extends Component {
       .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
       .then((res) => {
         const shelters = res.data.map((obj) => ({
-          id: obj.id,
+          id: "shelter_" + obj.id,
           name: obj.name,
           place: getAddress(obj.place),
           coord_lat: obj.coord_lat,
@@ -83,7 +78,33 @@ class ShelterPage extends Component {
             this.props.user_location.lng
           ).toFixed(4),
         }));
-        this.setState({ shelters });
+        let places = shelters;
+        this.setState({ places });
+      });
+
+    axios
+      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/building`)
+      .then((res) => {
+        const buildings = res.data.map((obj) => ({
+          id: "building_" + obj.id,
+          name: obj.name,
+          place: obj.place,
+          coord_lat: obj.coord_lat,
+          coord_lng: obj.coord_lng,
+          district: "",
+          city: "",
+          distance:getDistance(
+            obj.coord_lat,
+            obj.coord_lng,
+            this.props.user_location.lat,
+            this.props.user_location.lng
+          ).toFixed(4),
+        }));
+        let places = this.state.places;
+        places = places.concat(buildings);
+        places.sort(function(a,b) {return a.distance - b.distance;});
+        places = places.slice(0,3);
+        this.setState({ places });
       });
   }
 
@@ -113,70 +134,28 @@ class ShelterPage extends Component {
     });
   }
 
-  onChange = (value, event) => {
-    axios
-      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
-      .then((res) => {
-        const shelters = res.data.filter(shelter => shelter.name.toLowerCase().includes(value.toLowerCase())).map((obj) => ({
-          id: obj.id,
-          name: obj.name,
-          place: getAddress(obj.place),
-          coord_lat: obj.coord_lat,
-          coord_lng: obj.coord_lng,
-          district: getDistrict(obj.place),
-          city: getCity(obj.place),
-          distance: getDistance(
-            obj.coord_lat,
-            obj.coord_lng,
-            this.props.user_location.lat,
-            this.props.user_location.lng
-          ).toFixed(4),
-        }));
-        this.setState({ shelters });
-      });
-  }
-  onChangeCity = (event) => {
-    axios
-      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
-      .then((res) => {
-        const shelters = res.data.filter(shelter => shelter.place.toLowerCase().includes(event.key.toLowerCase())).map((obj) => ({
-          id: obj.id,
-          name: obj.name,
-          place: getAddress(obj.place),
-          coord_lat: obj.coord_lat,
-          coord_lng: obj.coord_lng,
-          district: getDistrict(obj.place),
-          city: getCity(obj.place),
-          distance: getDistance(
-            obj.coord_lat,
-            obj.coord_lng,
-            this.props.user_location.lat,
-            this.props.user_location.lng
-          ).toFixed(4),
-        }));
-        this.setState({ shelters });
-      });
-      message.info(event.key);
-  }
-
   selectRow = (record) => {
     this.handleCenterLocation(record.coord_lat, record.coord_lng);
     window.location.href = "#";
   }
 
   render() {
-    const { shelters, pagination, loading, config_center } = this.state;
+    const { places, loading, config_center } = this.state;
     const columns = [
       {
         title: "Name",
         dataIndex: "name",
-        key: "shelter_name",
-        render: text => (<div><Link to={`/shelter/` + (shelters.find(x => x.name === text).id -1).toString()}>{text}</Link></div>),
+        key: "place_name",
+        render: text => {
+          let id = places.find(x => x.name === text).id.split("_");
+          if (id[0] === "shelter") return (<div><Link to={`/shelter/` + (id[1] -1).toString()}>{text}</Link></div>);
+          else if (id[0] === "building") return (<div><Link to={`/building/` + (id[1] -1).toString()}>{text}</Link></div>);
+        },
       },
       {
         title: "Place",
         dataIndex: "place",
-        key: "shelter_place",
+        key: "place_address",
       },
       {
         title: "District",
@@ -200,19 +179,6 @@ class ShelterPage extends Component {
       },
     ];
 
-    const menu = (
-      <Menu onClick={this.onChangeCity} >
-        <Menu.Item key="Hà Nội" >
-          Hà Nội
-        </Menu.Item>
-        <Menu.Item key="Bắc Ninh" >
-          Bắc Ninh
-        </Menu.Item>
-        <Menu.Item key="Hải Phòng">
-          Hải Phòng
-        </Menu.Item>
-      </Menu>
-    );
     return (
       <div style={{ background: "#FFFFFF" }}>
         <Header
@@ -233,27 +199,14 @@ class ShelterPage extends Component {
               pagename={this.props.pagename}
               default_center={this.props.user_location}
               config_center={config_center}
-              data={shelters}
+              data={places}
             />
           </div>
         </Content>
 
-        <SearchField
-          placeholder="Search..."
-          onChange={this.onChange}
-          onClick={this.onChange}
-          classNames="shelter-search"
-        />
-        <Dropdown overlay={menu}>
-          <Button>
-            Find <DownOutlined />
-          </Button>
-        </Dropdown>
-
         <Table
           columns={columns}
-          dataSource={shelters}
-          pagination={pagination}
+          dataSource={places}
           loading={loading}
           onChange={this.handleTableChange}
           onRow={(record) => ({
@@ -268,4 +221,4 @@ class ShelterPage extends Component {
     );
   }
 }
-export default ShelterPage;
+export default RecommendPage;

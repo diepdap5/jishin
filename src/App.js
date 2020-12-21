@@ -16,6 +16,7 @@ import BuildingDetail from "./container/DetailInformation/BuildingDetail";
 import ShelterDetail from "./container/DetailInformation/ShelterDetail";
 import SignUp from "./component/SignUp/SignUp";
 import Login from "./component/Login/Login";
+import RecommendPage from "./container/RecommendPage";
 const { Sider } = Layout;
 require("dotenv").config();
 
@@ -66,9 +67,10 @@ class App extends Component {
                     defaultSelectedKeys={["1"]}
                     style={{ background: "#FFE3F2" }}
                   >
-                    <Menu.Item key="1" icon={<HomeOutlined />}>
-                      <Link to="/">地震情報</Link>
-                    </Menu.Item>
+                    <SubMenu key="1" icon={<HomeOutlined />} title="地震" style={{ background: "#FFE3F2" }} >
+                      <Menu.Item key="earthquake" icon={<HomeOutlined />}> <Link to="/">地震情報</Link></Menu.Item>
+                      <Menu.Item key="recommend" icon={<HomeOutlined />}> <Link to="/recommend">特別情報</Link></Menu.Item>
+                    </SubMenu>
                     <SubMenu key="2" icon={<NotificationOutlined />} title="避難所" style={{ background: "#FFE3F2" }} >
                       <Menu.Item key="shelter" icon={<MdPlace />}  ><Link to="/shelter">避難所情報</Link></Menu.Item>
                       <Menu.Item key="building" icon={<FaBuilding />}   ><Link to="/building">建物情報</Link></Menu.Item>
@@ -80,6 +82,9 @@ class App extends Component {
                 <Layout style={{ padding: "0 24px 24px" }}>
                   <Route exact path="/">
                     <LogPage user_location={this.state.user_location} />
+                  </Route>
+                  <Route exact path="/recommend">
+                    <RecommendPage user_location={this.state.user_location} />
                   </Route>
                   <Route exact path="/shelter">
                     <ShelterPage user_location={this.state.user_location} />

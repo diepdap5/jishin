@@ -138,6 +138,7 @@ class BuildingPage extends Component {
         title: "Distance (Unit: m )",
         dataIndex: "distance",
         key: "distance",
+        defaultSortOrder: 'ascend',
         sorter: {
           compare: (a, b) => a.distance - b.distance,
           multiple: 1,
@@ -153,18 +154,6 @@ class BuildingPage extends Component {
         },
       },
     ];
-    var i =0;
-    var j;
-    var tmp = {};
-    for (i=0;i<buildings.length-1;i++){
-      for(j=0;j<buildings.length-1-i;j++){
-        if(buildings[j].distance>buildings[j+1].distance){
-          tmp = buildings[j];
-          buildings[j]=buildings[j+1];
-          buildings[j+1]=tmp;
-        }
-      }
-    }
 
     return (
       <div style={{background: "#FFFFFF"}}>
