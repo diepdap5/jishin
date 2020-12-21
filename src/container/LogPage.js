@@ -156,8 +156,8 @@ class LogPage extends Component {
         title: "Location",
         dataIndex: "place",
         key: "jishin_place",
-        // render: text => (<div><Link to={`/earth_quake/` + (posts.find(x => x.place === text).id -1).toString()}>{text}</Link></div>),
-        render: text => (<div><Link to={`/earth_quake`}>{text}</Link></div>),
+        render: text => (<div><Link to={`/earth_quake/` + (posts.find(x => x.place === text).id -1).toString()}>{text}</Link></div>),
+        // render: text => (<div><Link to={`/earth_quake`}>{text}</Link></div>),
       },
       {
         title: "Occured time",

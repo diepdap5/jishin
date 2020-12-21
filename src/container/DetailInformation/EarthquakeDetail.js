@@ -110,6 +110,7 @@ class EarthquakeDetail extends Component {
 
   render() {
     const { pagination,places, loading, config_center } = this.state;
+    const user_id = this.props.match.params.shelter_id;
     const columns = [
       {
         title: "Name",

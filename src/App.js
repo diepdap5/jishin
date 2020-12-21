@@ -79,7 +79,7 @@ class App extends Component {
                   <Route exact path="/">
                     <LogPage user_location={this.state.user_location} />
                   </Route>
-                  <Route exact path="/earth_quake">
+                  <Route exact path="/earth_quake/:earth_quake_id">
                     <EarthquakeDetail user_location={this.state.user_location} />
                   </Route>
                   <Route exact path="/shelter">
