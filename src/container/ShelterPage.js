@@ -196,8 +196,8 @@ class ShelterPage extends Component {
           <div>
             <MapTemp
               pagename={this.props.pagename}
-              default_center={this.props.user_location}
-              config_center={config_center}
+              center={this.props.user_location}
+              user_location={this.props.user_location}
               data={shelters}
             />
           </div>

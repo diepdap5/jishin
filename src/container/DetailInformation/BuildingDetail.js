@@ -126,8 +126,8 @@ class BuildingDetail extends Component {
           <div>
             <MapTemp
               pagename={this.props.pagename}
-              default_center={this.props.user_location}
-              config_center={config_center}
+              center={this.state.coord_des}
+              user_location={this.props.user_location}
               data={this.state.building}
               destination = {this.state.coord_des}
               zoom ={20}

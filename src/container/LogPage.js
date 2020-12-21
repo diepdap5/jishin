@@ -1,6 +1,6 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { BrowserRouter as Router, Switch, Route, Link, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Layout, Table, Tag, Button, Dropdown, Menu } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
@@ -224,9 +224,9 @@ class LogPage extends Component {
           <div>
             <MapTemp
               pagename={this.props.pagename}
-              default_center={this.props.user_location}
-              config_center={config_center}
-              data={jishin_data}
+              center={this.props.user_location}
+              user_location={this.props.user_location}
+              earthquake_data={jishin_data}
             />
           </div>
         </Content>

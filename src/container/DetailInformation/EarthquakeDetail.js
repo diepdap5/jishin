@@ -9,7 +9,23 @@ import {getDistance, getDistrict, getCity, getAddress} from "../../component/For
 
 
 const { Header, Content, Footer } = Layout;
+function changeDate(this_date) {
+  var return_date = "";
+  return_date =
+    this_date.getHours().toString() +
+    ":" +
+    this_date.getMinutes().toString() +
+    ":" +
+    this_date.getSeconds().toString() +
+    " " +
+    this_date.getDate().toString() +
+    "/" +
+    this_date.getMonth().toString() +
+    "/" +
+    this_date.getFullYear().toString();
 
+  return return_date;
+}
 
 class EarthquakeDetail extends Component {
   constructor(props) {
@@ -17,19 +33,58 @@ class EarthquakeDetail extends Component {
     this.state = {
       places: [],
       loading: false,
-      config_center: {
+      jishin:[],
+      coord_des: {
         lat: null,
         lng: null,
       },
-      pagination: {
-        current: 1,
-        pageSize: 3,
-      },
     };
   }
-
-  componentDidMount() {
+  getEQDetail=(user_id) => {
     axios
+      .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/log`)
+      .then((res) => {
+        const jishins = res.data.map((obj) => {
+          let timeLeft = "";
+          const difference = obj.occure_time - Date.now() / 1000;
+          if (difference > 0) {
+            if (difference > 24 * 60 * 60)
+              timeLeft = `${Math.floor(difference / 24 / 60 / 60)} days left`;
+            else if (difference > 60 * 60)
+              timeLeft = `${Math.floor(difference / 60 / 60)} hours left`;
+            else if (difference > 60)
+              timeLeft = `${Math.floor(difference / 60)} minutes left`;
+            else timeLeft = `${difference} seconds left`;
+          }
+          return {
+            id: obj.id,
+            occure_time: `
+            ${changeDate(new Date(obj.occure_time * 1000))} ${timeLeft ? "- " + timeLeft : ""
+              }`,
+            place: obj.place,
+            strength: obj.strength,
+            coord_lat: obj.coord_lat,
+            coord_lng: obj.coord_long,
+          };
+        });
+        this.setState({ jishin : [
+          {
+            id: jishins[user_id].id,
+            occure_time: jishins[user_id].occure_time,
+            place: jishins[user_id].place,
+            strength: jishins[user_id].strength,
+            coord_lat: jishins[user_id].coord_lat,
+            coord_lng: jishins[user_id].coord_lng,
+
+          },] });
+        this.setState({coord_des:
+            {
+              lat: jishins[user_id].coord_lat,
+              lng: jishins[user_id].coord_lng,
+            }});
+      });
+
+      axios
       .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
       .then((res) => {
         const shelters = res.data.map((obj) => ({
@@ -72,10 +127,13 @@ class EarthquakeDetail extends Component {
         let places = this.state.places;
         places = places.concat(buildings);
         places.sort(function(a,b) {return a.distance - b.distance;});
-        // places = places.slice(0,3);
+        places = places.slice(0,3);
         this.setState({ places });
       });
   }
+  // componentDidMount() {
+    
+  // }
 
   handleTableChange = (pagination) => {
     this.setState({
@@ -85,32 +143,9 @@ class EarthquakeDetail extends Component {
     });
   };
 
-  handleChangeMap = () => {
-    this.setState({
-      config_center: {
-        lat: 23,
-        lng: 105,
-      },
-    });
-  };
-
-  handleCenterLocation = (x, y) => {
-    this.setState({
-      config_center: {
-        lat: x,
-        lng: y,
-      },
-    });
-  }
-
-  selectRow = (record) => {
-    this.handleCenterLocation(record.coord_lat, record.coord_lng);
-    window.location.href = "#";
-  }
-
   render() {
-    const { pagination,places, loading, config_center } = this.state;
-    const user_id = this.props.match.params.shelter_id;
+    const { places, loading, jishin, coord_des } = this.state;
+    const user_id = this.props.match.params.earth_quake_id;
     const columns = [
       {
         title: "Name",
@@ -148,7 +183,7 @@ class EarthquakeDetail extends Component {
         },
       },
     ];
-
+    this.getEQDetail(user_id);
     return (
       <div style={{ background: "#FFFFFF" }}>
         <Header
@@ -167,9 +202,10 @@ class EarthquakeDetail extends Component {
           <div>
             <MapTemp
               pagename={this.props.pagename}
-              default_center={this.props.user_location}
-              config_center={config_center}
+              center={coord_des}
+              user_location={this.props.user_location}
               data={places}
+              earthquake_data={jishin}
             />
           </div>
         </Content>
@@ -178,13 +214,7 @@ class EarthquakeDetail extends Component {
           columns={columns}
           dataSource={places}
           loading={loading}
-          pagination={pagination}
           onChange={this.handleTableChange}
-          onRow={(record) => ({
-            onClick: () => {
-              this.selectRow(record);
-            },
-          })}
         />
         <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>Design by Hanabi</Footer>
       </div>
