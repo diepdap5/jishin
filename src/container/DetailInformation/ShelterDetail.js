@@ -4,9 +4,9 @@ import { Component } from "react";
 import MapTemp from "../MapTemp";
 import axios from "axios";
 import { withRouter } from 'react-router-dom';
-import {getDistance, getDistrict, getCity, getAddress} from "../../component/ForGetTable/getData"
+import {getDistance, getDistrict, getCity, getAddress} from "../../component/ForGetTable/getData";
 const { Header, Content, Footer } = Layout;
-class BuildingDetail extends Component {
+class ShelterDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,7 @@ class BuildingDetail extends Component {
     };
   }
 
-  getBuildingDetail=(user_id) => {
+  getShelterDetail=(user_id) => {
     axios
       .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/shelter`)
       .then((res) => {
@@ -105,7 +105,7 @@ class BuildingDetail extends Component {
         key: "distance",
       },
     ];
-    this.getBuildingDetail(user_id);
+    this.getShelterDetail(user_id);
     return (
       <div style={{ background: "#FFFFFF" }}>
         <Header
@@ -145,4 +145,4 @@ class BuildingDetail extends Component {
     );
   }
 }
-export default withRouter(BuildingDetail);
+export default withRouter(ShelterDetail);

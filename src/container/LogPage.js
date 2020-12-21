@@ -1,8 +1,7 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, withRouter } from "react-router-dom";
 import { Layout, Table, Tag, Button, Dropdown, Menu } from "antd";
-import ShelterInfo from "../container/ShelterPage";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
@@ -103,9 +102,8 @@ class LogPage extends Component {
           return {
             id: obj.id,
             occure_time: `
-            ${changeDate(new Date(obj.occure_time * 1000))} ${
-              timeLeft ? "- " + timeLeft : ""
-            }`,
+            ${changeDate(new Date(obj.occure_time * 1000))} ${timeLeft ? "- " + timeLeft : ""
+              }`,
             place: obj.place,
             strength: obj.strength,
             coord_lat: obj.coord_lat,
@@ -131,6 +129,18 @@ class LogPage extends Component {
     });
   };
 
+  handleCenterLocation = (x, y) => {
+    this.setState({
+      config_center: {
+        lat: x,
+        lng: y,
+      },
+    });
+  }
+  selectRow = (record) => {
+    this.handleCenterLocation(record.coord_lat, record.coord_lng);
+    // window.location.href = "#";
+  }
   render() {
     const { posts, pagination, loading, config_center } = this.state;
     const columns = [
@@ -138,6 +148,8 @@ class LogPage extends Component {
         title: "場所",
         dataIndex: "place",
         key: "jishin_place",
+        render: text => (<div><Link to={`/earth_quake/` + (posts.find(x => x.place === text).id -1).toString()}>{text}</Link></div>),
+        // render: text => (<div><Link to={`/earth_quake`}>{text}</Link></div>),
       },
       {
         title: "起きる時間",
@@ -157,79 +169,75 @@ class LogPage extends Component {
       jishin_data[i] = posts[i];
     }
     return (
-      <Router>
-        <Layout style={{ background: "#FFFFFF" }}>
-          <Header
-            className="site-layout-sub-header-background"
-            style={{
-              padding: 0,
-              textAlign: "center",
-              fontSize: "30px",
-              color: "black",
-              background: "#FFE3F2",
-            }}
-          >
-            <span>地震情報</span>
-            <Dropdown overlay={menu} placement="bottomCenter">
-              <Button
-                style={{
-                  left: 510,
-                  width: 10,
-                  background: "#FFE3F2",
-                  border: "white",
-                }}
-                icon={<NotificationOutlined style={{ fontSize: "30px" }} />}
-                size="large"
-              >
-                <span className="badge ">1</span>
-                {/* bottomRight */}
-              </Button>
-            </Dropdown>
-            <Dropdown overlay={user_menu} placement="bottomCenter">
-              <Button
-                style={{
-                  left: 550,
-                  width: 10,
-                  background: "#FFE3F2",
-                  border: "white",
-                }}
-                icon={<AiOutlineUser style={{ fontSize: "30px" }} />}
-                size="large"
-              >
-              </Button>
-            </Dropdown>
-          </Header>
-          <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
-            <div>
-              <Switch>
-                <Route path="/shelter-details">
-                  <ShelterInfo />
-                </Route>
-                <Route path="/">
-                  <MapTemp
-                    pagename={this.props.pagename}
-                    default_center={this.props.user_location}
-                    config_center={config_center}
-                    data={jishin_data}
-                  />
-                </Route>
-              </Switch>
-            </div>
-          </Content>
-          <Table
-            columns={columns}
-            dataSource={jishin_data}
-            pagination={pagination}
-            loading={loading}
-            onChange={this.handleTableChange}
-          />
-          <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>
+      <Layout style={{ background: "#FFFFFF" }}>
+        <Header
+          className="site-layout-sub-header-background"
+          style={{
+            padding: 0,
+            textAlign: "center",
+            fontSize: "30px",
+            color: "black",
+            background: "#FFE3F2",
+          }}
+        >
+          <span>地震情報</span>
+          <Dropdown overlay={menu} placement="bottomCenter">
+            <Button
+              style={{
+                left: 310,
+                width: 10,
+                background: "#FFE3F2",
+                border: "white",
+              }}
+              icon={<NotificationOutlined style={{ fontSize: "30px" }} />}
+              size="large"
+            >
+              <span className="badge ">1</span>
+              {/* bottomRight */}
+            </Button>
+          </Dropdown>
+          <Dropdown overlay={user_menu} placement="bottomCenter">
+            <Button
+              style={{
+                left: 350,
+                width: 10,
+                background: "#FFE3F2",
+                border: "white",
+              }}
+              icon={<AiOutlineUser style={{ fontSize: "30px" }} />}
+              size="large"
+            >
+            </Button>
+          </Dropdown>
+        </Header>
+        <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
+          <div>
+            <MapTemp
+              pagename={this.props.pagename}
+              default_center={this.props.user_location}
+              config_center={config_center}
+              data={jishin_data}
+            />
+          </div>
+        </Content>
+        <Table
+          columns={columns}
+          dataSource={jishin_data}
+          pagination={pagination}
+          loading={loading}
+          onChange={this.handleTableChange}
+          onRow={(record) => ({
+            onClick: () => {
+              this.selectRow(record);
+            },
+          })}
+        />
+        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>
           開発チーム・花火
-          </Footer>
-        </Layout>
-      </Router>
+        </Footer>
+      </Layout>
     );
   }
 }
 
-export default LogPage;
+export default withRouter(LogPage);

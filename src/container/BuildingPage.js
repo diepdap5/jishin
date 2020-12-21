@@ -1,12 +1,12 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { Layout, Table, Button, Result } from "antd";
+import { Layout, Table } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import SearchField from "react-search-field";
 import { Link } from "react-router-dom";
-import {getDistance} from "../component/ForGetTable/getData"
+import {getDistance} from "../component/ForGetTable/getData";
 
 const { Header, Content, Footer } = Layout;
 
@@ -99,7 +99,7 @@ class BuildingPage extends Component {
 
   selectRow = (record) => {
     this.handleCenterLocation(record.coord_lat, record.coord_lng);
-    window.location.href = "#";
+    // window.location.href = "#";
   }
 
   render() {

@@ -1,17 +1,17 @@
 import "antd/dist/antd.css";
-import "../App.css";
+import "../../App.css";
 import { Layout, Table } from "antd";
 import { Component } from "react";
-import MapTemp from "./MapTemp";
+import MapTemp from "../MapTemp";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import {getDistance, getDistrict, getCity, getAddress} from "../component/ForGetTable/getData"
+import { Link, withRouter } from "react-router-dom";
+import {getDistance, getDistrict, getCity, getAddress} from "../../component/ForGetTable/getData";
 
 
 const { Header, Content, Footer } = Layout;
 
 
-class RecommendPage extends Component {
+class EarthquakeDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +20,10 @@ class RecommendPage extends Component {
       config_center: {
         lat: null,
         lng: null,
+      },
+      pagination: {
+        current: 1,
+        pageSize: 3,
       },
     };
   }
@@ -56,8 +60,8 @@ class RecommendPage extends Component {
           place: obj.place,
           coord_lat: obj.coord_lat,
           coord_lng: obj.coord_lng,
-          district: "",
-          city: "",
+          district: getDistrict(obj.place),
+          city: getCity(obj.place),
           distance:getDistance(
             obj.coord_lat,
             obj.coord_lng,
@@ -68,7 +72,7 @@ class RecommendPage extends Component {
         let places = this.state.places;
         places = places.concat(buildings);
         places.sort(function(a,b) {return a.distance - b.distance;});
-        places = places.slice(0,3);
+        // places = places.slice(0,3);
         this.setState({ places });
       });
   }
@@ -105,7 +109,8 @@ class RecommendPage extends Component {
   }
 
   render() {
-    const { places, loading, config_center } = this.state;
+    const { pagination,places, loading, config_center } = this.state;
+    const user_id = this.props.match.params.shelter_id;
     const columns = [
       {
         title: "場所の名前",
@@ -173,6 +178,7 @@ class RecommendPage extends Component {
           columns={columns}
           dataSource={places}
           loading={loading}
+          pagination={pagination}
           onChange={this.handleTableChange}
           onRow={(record) => ({
             onClick: () => {
@@ -186,4 +192,4 @@ class RecommendPage extends Component {
     );
   }
 }
-export default RecommendPage;
+export default withRouter(EarthquakeDetail);
