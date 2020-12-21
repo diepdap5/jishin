@@ -6,6 +6,8 @@ import ShelterInfo from "../container/ShelterPage";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
+import SignUp from "../component/SignUp/SignUp";
+import Login from "../component/Login/Login";
 import { NotificationOutlined } from "@ant-design/icons";
 import { AiOutlineUser } from "react-icons/ai";
 const { Header, Content, Footer } = Layout;
@@ -41,21 +43,11 @@ const menu = (
 const user_menu = (
   <Menu>
     <Menu.Item key="0">
-      <a href="/detail/6">
-        <button
-          style={{
-            background: "white",
-            border: "white",
-          }}
-          onClick={() => window.location.reload(false)}
-        >
-          Log In
-        </button>
-      </a>
+    <Login />
     </Menu.Item>
     <Menu.Divider />
-    <Menu.Item key="1" disabled>
-      Sign Up
+    <Menu.Item key="1">
+    <SignUp />
     </Menu.Item>
   </Menu>
 );
@@ -143,17 +135,17 @@ class LogPage extends Component {
     const { posts, pagination, loading, config_center } = this.state;
     const columns = [
       {
-        title: "Location",
+        title: "場所",
         dataIndex: "place",
         key: "jishin_place",
       },
       {
-        title: "Occured time",
+        title: "起きる時間",
         dataIndex: "occure_time",
         key: "jishin_occure_time",
       },
       {
-        title: "Strength",
+        title: "震度",
         dataIndex: "strength",
         key: "strength",
         render: (text) => <Tag color="red">{text}</Tag>,
@@ -204,8 +196,6 @@ class LogPage extends Component {
                 icon={<AiOutlineUser style={{ fontSize: "30px" }} />}
                 size="large"
               >
-                <span className="badge ">1</span>
-                {/* bottomRight */}
               </Button>
             </Dropdown>
           </Header>
@@ -234,7 +224,7 @@ class LogPage extends Component {
             onChange={this.handleTableChange}
           />
           <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>
-            Design by Hanabi
+          開発チーム・花火
           </Footer>
         </Layout>
       </Router>

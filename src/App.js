@@ -76,8 +76,6 @@ class App extends Component {
                       <Menu.Item key="building" icon={<FaBuilding />}   ><Link to="/building">建物情報</Link></Menu.Item>
                     </SubMenu>
                   </Menu>
-                  <Login />
-                  <SignUp />
                 </Sider>
                 <Layout style={{ padding: "0 24px 24px" }}>
                   <Route exact path="/">
