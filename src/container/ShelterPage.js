@@ -7,7 +7,7 @@ import axios from "axios";
 import SearchField from "react-search-field";
 import { DownOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
-import {getDistance, getDistrict, getCity, getAddress} from "../component/ForGetTable/getData"
+import {getDistance, getDistrict, getCity, getAddress} from "../component/ForGetTable/getData";
 
 
 const { Header, Content, Footer } = Layout;
@@ -126,7 +126,7 @@ class ShelterPage extends Component {
 
   selectRow = (record) => {
     this.handleCenterLocation(record.coord_lat, record.coord_lng);
-    window.location.href = "#";
+    // window.location.href = "#";
   }
 
   render() {

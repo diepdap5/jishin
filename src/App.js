@@ -11,12 +11,11 @@ import ShelterPage from "./container/ShelterPage";
 import BuildingPage from "./container/BuildingPage";
 import LogPage from "./container/LogPage";
 import DetailPage from "./container/DetailPage";
-// import DetailPage from "./container/DetailInformation/EarthQuakeDetail"
 import BuildingDetail from "./container/DetailInformation/BuildingDetail";
 import ShelterDetail from "./container/DetailInformation/ShelterDetail";
+import EarthquakeDetail from "./container/DetailInformation/EarthquakeDetail";
 import SignUp from "./component/SignUp/SignUp";
 import Login from "./component/Login/Login";
-import RecommendPage from "./container/RecommendPage";
 const { Sider } = Layout;
 require("dotenv").config();
 
@@ -67,10 +66,7 @@ class App extends Component {
                     defaultSelectedKeys={["1"]}
                     style={{ background: "#FFE3F2" }}
                   >
-                    <SubMenu key="1" icon={<HomeOutlined />} title="地震" style={{ background: "#FFE3F2" }} >
-                      <Menu.Item key="earthquake" icon={<HomeOutlined />}> <Link to="/">地震情報</Link></Menu.Item>
-                      <Menu.Item key="recommend" icon={<HomeOutlined />}> <Link to="/recommend">特別情報</Link></Menu.Item>
-                    </SubMenu>
+                    <Menu.Item key="1" icon={<HomeOutlined />}> <Link to="/">地震</Link></Menu.Item>
                     <SubMenu key="2" icon={<NotificationOutlined />} title="避難所" style={{ background: "#FFE3F2" }} >
                       <Menu.Item key="shelter" icon={<MdPlace />}  ><Link to="/shelter">避難所情報</Link></Menu.Item>
                       <Menu.Item key="building" icon={<FaBuilding />}   ><Link to="/building">建物情報</Link></Menu.Item>
@@ -83,8 +79,8 @@ class App extends Component {
                   <Route exact path="/">
                     <LogPage user_location={this.state.user_location} />
                   </Route>
-                  <Route exact path="/recommend">
-                    <RecommendPage user_location={this.state.user_location} />
+                  <Route exact path="/earth_quake">
+                    <EarthquakeDetail user_location={this.state.user_location} />
                   </Route>
                   <Route exact path="/shelter">
                     <ShelterPage user_location={this.state.user_location} />
@@ -101,7 +97,6 @@ class App extends Component {
                   <Route exact path="/shelter/:shelter_id">
                     <ShelterDetail user_location={this.state.user_location} />
                   </Route>
-                  {/* <Route path="/building/:building_id" component={BuildingDetail}/> */}
                 </Layout>
               </Layout>
             </Route>
