@@ -148,7 +148,7 @@ class EarthquakeDetail extends Component {
     const user_id = this.props.match.params.earth_quake_id;
     const columns = [
       {
-        title: "Name",
+        title: "場所の名前",
         dataIndex: "name",
         key: "place_name",
         render: text => {
@@ -158,22 +158,22 @@ class EarthquakeDetail extends Component {
         },
       },
       {
-        title: "Place",
+        title: "場所",
         dataIndex: "place",
         key: "place_address",
       },
       {
-        title: "District",
+        title: "地区",
         dataIndex: "district",
         key: "district",
       },
       {
-        title: "City",
+        title: "都市",
         dataIndex: "city",
         key: "city",
       },
       {
-        title: "Distance (Unit: m )",
+        title: "距離 ( m )",
         dataIndex: "distance",
         defaultSortOrder: 'ascend',
         key: "distance",
@@ -216,7 +216,7 @@ class EarthquakeDetail extends Component {
           loading={loading}
           onChange={this.handleTableChange}
         />
-        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>Design by Hanabi</Footer>
+        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>開発チーム・花火</Footer>
       </div>
       // </Layout>
     );

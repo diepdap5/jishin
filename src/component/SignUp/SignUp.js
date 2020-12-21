@@ -35,18 +35,7 @@ class SignUp extends Component {
   render() {
     return (
       <div>
-        <Button
-          style={{
-            width: 120,
-            top: 20,
-            background: "#81004B",
-            border: "black"
-          }}
-          type="primary"
-          onClick={this.showModalSignUp}
-        >
-          サインアップ
-        </Button>
+        <span onClick={this.showModalSignUp}>サインアップ</span>
         <Modal
           title="サインアップ"
           visible={this.state.isSignUpModalVisible}
