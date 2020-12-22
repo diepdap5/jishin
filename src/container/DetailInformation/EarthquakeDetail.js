@@ -9,23 +9,6 @@ import { Link, withRouter } from "react-router-dom";
 
 
 const { Header, Content, Footer } = Layout;
-function changeDate(this_date) {
-  var return_date = "";
-  return_date =
-    this_date.getHours().toString() +
-    ":" +
-    this_date.getMinutes().toString() +
-    ":" +
-    this_date.getSeconds().toString() +
-    " " +
-    this_date.getDate().toString() +
-    "/" +
-    this_date.getMonth().toString() +
-    "/" +
-    this_date.getFullYear().toString();
-
-  return return_date;
-}
 
 class EarthquakeDetail extends Component {
   constructor(props) {

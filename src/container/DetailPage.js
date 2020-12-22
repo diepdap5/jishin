@@ -166,7 +166,7 @@ import "../App.css";
 import { withRouter } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout, Table, Tag, Button } from "antd";
-import React,{ Component } from "react";
+import React from "react";
 import MapTemp from "./MapTemp";
 import { NotificationOutlined } from "@ant-design/icons";
 import {Circle} from "react-google-maps";
