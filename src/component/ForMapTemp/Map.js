@@ -14,7 +14,7 @@ class SimpleMap extends Component {
     const directionsService = new maps.DirectionsService();
     const directionsDisplay = new maps.DirectionsRenderer();
     directionsService.route({
-      origin: this.props.center,
+      origin: this.props.user_location,
       destination: this.props.destination,
       travelMode: maps.DirectionsTravelMode.DRIVING
     }, (response, status) => {
@@ -38,6 +38,7 @@ class SimpleMap extends Component {
           bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY }}
           center={this.props.center}
           defaultZoom={this.props.zoom}
+          yesIWantToUseGoogleMapApiInternals={true}
           onGoogleApiLoaded={({ map, maps }) => {
             if (this.props.destination != null) {
               this.renderDirection(map, maps);

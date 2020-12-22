@@ -1,0 +1,69 @@
+[
+    {
+        "id": "1",
+        "effect": [
+            {
+                "origin_lat": 22.449042,
+                "origin_lng": 105.948791,
+                "des_lat": 22.4490,
+                "des_lng": 105.948793
+            },
+            {
+                "origin_lat": 22.4490,
+                "origin_lng": 105.948793,
+                "des_lat": 22.4490,
+                "des_lng": 105.948820
+            },
+            {
+                "origin_lat": 22.449042,
+                "origin_lng": 105.948791,
+                "des_lat": 22.45,
+                "des_lng": 105.948820
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "effect": [
+            {
+                "origin_lat": 19.453584,
+                "origin_lng": 104.683175,
+                "des_lat": 0,
+                "des_lng": 0
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "effect": [
+            {
+                "origin_lat": 13.547155,
+                "origin_lng": 107.847238,
+                "des_lat": 0,
+                "des_lng": 0
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "effect": [
+            {
+                "origin_lat": 20.218339,
+                "origin_lng": 104.199777,
+                "des_lat": 0,
+                "des_lng": 0
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "effect": [
+            {
+                "origin_lat": 22.449067,
+                "origin_lng": 107.845049,
+                "des_lat": 0,
+                "des_lng": 0
+            }
+        ]
+    }
+]

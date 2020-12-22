@@ -22,10 +22,6 @@ class ShelterPage extends Component {
         pageSize: 3,
       },
       loading: false,
-      config_center: {
-        lat: null,
-        lng: null,
-      },
     };
   }
 
@@ -130,7 +126,7 @@ class ShelterPage extends Component {
   }
 
   render() {
-    const { shelters, pagination, loading, config_center } = this.state;
+    const { shelters, pagination, loading } = this.state;
     const columns = [
       {
         title: "場所の名前",
