@@ -64,8 +64,10 @@ class SimpleMap extends Component {
                     lat: temp_destination_list[i].des_lat,
                     lng: temp_destination_list[i].des_lng
                   });
-                console.log(origin_ord);
-                console.log(des_ord);
+                // console.log(origin_ord);
+                // console.log(des_ord);
+                console.log(this.props.center);
+                // this.renderDirection(map,maps,origin_ord,des_ord);
                 
               }
               // this.renderDirection(map,maps, {lat:21, lng:106}, {lat:22, lng:105});

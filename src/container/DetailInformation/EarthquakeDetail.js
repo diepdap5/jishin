@@ -26,6 +26,7 @@ class EarthquakeDetail extends Component {
     var jishins = this.props.jishins;
     console.log(this.props.jishins);
     console.log("haha");
+    console.log(user_id);
     console.log(this.props.places);
     this.setState({
       jishin: [
