@@ -124,7 +124,7 @@ class ShelterDetail extends Component {
               user_location = {this.props.user_location}
               data={this.state.shelter}
               destination = {this.state.coord_des}
-              zoom ={20}
+              zoom ={15}
             />
           </div>
         </Content>
