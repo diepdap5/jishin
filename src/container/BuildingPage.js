@@ -20,10 +20,6 @@ class BuildingPage extends Component {
         pageSize: 3,
       },
       loading: false,
-      config_center: {
-        lat: null,
-        lng: null,
-      },
     };
   }
 
@@ -57,23 +53,6 @@ class BuildingPage extends Component {
     });
   };
 
-  handleChangeMap = () => {
-    this.setState({
-      config_center: {
-        lat: 23,
-        lng: 105,
-      },
-    });
-  };
-
-  handleCenterLocation = (x, y) =>{
-    this.setState({
-      config_center: {
-        lat: x,
-        lng: y,
-      },
-    });
-  }
 
   onChange = (value, event) => {
     axios
@@ -97,13 +76,8 @@ class BuildingPage extends Component {
       });
   }
 
-  selectRow = (record) => {
-    this.handleCenterLocation(record.coord_lat, record.coord_lng);
-    // window.location.href = "#";
-  }
-
   render() {
-    const { buildings, pagination, loading, config_center } = this.state;
+    const { buildings, pagination, loading } = this.state;
     const columns = [
       {
         title: "場所の名前",
@@ -175,11 +149,7 @@ class BuildingPage extends Component {
           pagination={pagination}
           loading={loading}
           onChange={this.handleTableChange}
-          onRow={(record) => ({
-            onClick: () => {
-              this.selectRow(record);
-            },
-          })}
+
         />
         <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>開発チーム・花火</Footer>
       </div>
