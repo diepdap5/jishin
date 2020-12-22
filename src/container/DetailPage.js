@@ -166,9 +166,10 @@ import "../App.css";
 import { withRouter } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout, Table, Tag, Button } from "antd";
-import { Component } from "react";
+import React,{ Component } from "react";
 import MapTemp from "./MapTemp";
 import { NotificationOutlined } from "@ant-design/icons";
+import {Circle} from "react-google-maps";
 const { Header, Content, Footer } = Layout;
 function changeDate(this_date) {
   var return_date = '';
@@ -181,7 +182,7 @@ function changeDate(this_date) {
 
     return return_date;
 }
-class DetailPage extends Component {
+class DetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -289,6 +290,15 @@ class DetailPage extends Component {
                     default_center={this.props.user_location}
                     config_center={config_center}
                     data={data_jishin}
+                  />
+                  <Circle
+                    defaultCenter={{
+                      lat: parseFloat(data_jishin.coord_lat),
+                      lng: parseFloat(data_jishin.coord_lng)
+                    }}
+                    radius={3000}
+                    blue="red"
+                    // options={place.circle.options}
                   />
                 </Route>
               </Switch>
