@@ -82,27 +82,27 @@ class BuildingDetail extends Component {
     const user_id = this.props.match.params.building_id;
     const columns = [
       {
-        title: "Name",
+        title: "場所の名前",
         dataIndex: "name",
         key: "building_name",
       },
       {
-        title: "Place",
+        title: "場所",
         dataIndex: "place",
         key: "building_place",
       },
       {
-        title: "District",
+        title: "地区",
         dataIndex: "district",
         key: "district",
       },
       {
-        title: "City",
+        title: "都市",
         dataIndex: "city",
         key: "city",
       },
       {
-        title: "Distance (Unit: m )",
+        title: "距離 ( m )",
         dataIndex: "distance",
         key: "distance",
       },
@@ -126,8 +126,8 @@ class BuildingDetail extends Component {
           <div>
             <MapTemp
               pagename={this.props.pagename}
-              default_center={this.props.user_location}
-              config_center={config_center}
+              center={this.state.coord_des}
+              user_location={this.props.user_location}
               data={this.state.building}
               destination = {this.state.coord_des}
               zoom ={20}
@@ -142,7 +142,7 @@ class BuildingDetail extends Component {
           loading={loading}
           onChange={this.handleTableChange}
         />
-        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>Design by Hanabi</Footer>
+        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>開発チーム・花火</Footer>
       </div>
     );
   }

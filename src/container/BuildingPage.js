@@ -106,18 +106,18 @@ class BuildingPage extends Component {
     const { buildings, pagination, loading, config_center } = this.state;
     const columns = [
       {
-        title: "Name",
+        title: "場所の名前",
         dataIndex: "name",
         key: "building_name",
       render: text => (<div><Link to={`/building/` + (buildings.find(x => x.name === text).id -1).toString()}>{text}</Link></div>),
       },
       {
-        title: "Place",
+        title: "場所",
         dataIndex: "place",
         key: "building_place",
       },
       {
-        title: "Distance (Unit: m )",
+        title: "距離 ( m )",
         dataIndex: "distance",
         key: "distance",
         defaultSortOrder: 'ascend',
@@ -127,7 +127,7 @@ class BuildingPage extends Component {
         },
       },
       {
-        title: "Fortification level",
+        title: "防備レベル",
         dataIndex: "fortification",
         key: "fortification",
         sorter: {
@@ -155,8 +155,8 @@ class BuildingPage extends Component {
           <div>
             <MapTemp
               pagename={this.props.pagename}
-              default_center={this.props.user_location}
-              config_center={config_center}
+              center={this.props.user_location}
+              user_location={this.props.user_location}
               data={buildings}
             />
           </div>
@@ -181,7 +181,7 @@ class BuildingPage extends Component {
             },
           })}
         />
-        <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>Design by Hanabi</Footer>
+        <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>開発チーム・花火</Footer>
       </div>
       // </Layout>
     );

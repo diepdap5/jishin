@@ -1,7 +1,6 @@
 import React from 'react';
 import './Marker.css';
 import ReactTooltip from "react-tooltip";
-import { Button } from 'antd';
 
 const MarkerPin = (props) => {
     const { color, name, tooltip } = props;

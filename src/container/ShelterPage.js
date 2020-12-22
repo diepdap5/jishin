@@ -133,28 +133,28 @@ class ShelterPage extends Component {
     const { shelters, pagination, loading, config_center } = this.state;
     const columns = [
       {
-        title: "Name",
+        title: "場所の名前",
         dataIndex: "name",
         key: "shelter_name",
         render: text => (<div><Link to={`/shelter/` + (shelters.find(x => x.name === text).id -1).toString()}>{text}</Link></div>),
       },
       {
-        title: "Place",
+        title: "場所",
         dataIndex: "place",
         key: "shelter_place",
       },
       {
-        title: "District",
+        title: "地区",
         dataIndex: "district",
         key: "district",
       },
       {
-        title: "City",
+        title: "都市",
         dataIndex: "city",
         key: "city",
       },
       {
-        title: "Distance (Unit: m )",
+        title: "距離 ( m )",
         dataIndex: "distance",
         defaultSortOrder: 'ascend',
         key: "distance",
@@ -196,8 +196,8 @@ class ShelterPage extends Component {
           <div>
             <MapTemp
               pagename={this.props.pagename}
-              default_center={this.props.user_location}
-              config_center={config_center}
+              center={this.props.user_location}
+              user_location={this.props.user_location}
               data={shelters}
             />
           </div>
@@ -227,7 +227,7 @@ class ShelterPage extends Component {
             },
           })}
         />
-        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>Design by Hanabi</Footer>
+        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>開発チーム・花火</Footer>
       </div>
       // </Layout>
     );

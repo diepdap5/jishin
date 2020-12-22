@@ -35,19 +35,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <Button
-          style={{
-            top: 10,
-            width: 120,
-            bottom: 10,
-            background: "#81004B",
-            border: "black"
-          }}
-          type="primary"
-          onClick={this.showModalLogin}
-        >
-          ログイン
-        </Button>
+          <span onClick={this.showModalLogin}>ログイン</span>
         <Modal
           title="ログイン"
           visible={this.state.isLoginModalVisible}
