@@ -10,17 +10,16 @@ class SimpleMap extends Component {
     },
     zoom: 11
   };
-  renderDirection(map, maps) {
+  renderDirection(map, maps, origin_ord, des_ord) {
     const directionsService = new maps.DirectionsService();
     const directionsDisplay = new maps.DirectionsRenderer();
     directionsService.route({
-      origin: this.props.user_location,
-      destination: this.props.destination,
+      origin: origin_ord,
+      destination: des_ord,
       travelMode: maps.DirectionsTravelMode.DRIVING
     }, (response, status) => {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
-        console.log(response.routes[0]);
         const routePolyline = new maps.Polyline({
           path: response.routes[0].overview_path
         });
@@ -41,9 +40,37 @@ class SimpleMap extends Component {
           yesIWantToUseGoogleMapApiInternals={true}
           onGoogleApiLoaded={({ map, maps }) => {
             if (this.props.destination != null) {
-              this.renderDirection(map, maps);
+              this.renderDirection(map, maps, this.props.user_location, this.props.destination);
             }
-
+            if (this.props.destination_list != null) {
+              var temp_destination_list = this.props.destination_list;
+              var i;
+              for (i = 0; i < temp_destination_list.length; i++) {
+                var origin_ord = {
+                  lat: temp_destination_list[i].origin_lat,
+                  lng: temp_destination_list[i].origin_lng
+                };
+                var des_ord = {
+                  lat: temp_destination_list[i].des_lat,
+                  lng: temp_destination_list[i].des_lng
+                };
+                this.renderDirection(map, maps,
+                  {
+                    lat: temp_destination_list[i].origin_lat,
+                    lng: temp_destination_list[i].origin_lng
+                  }
+                  ,
+                  {
+                    lat: temp_destination_list[i].des_lat,
+                    lng: temp_destination_list[i].des_lng
+                  });
+                console.log(origin_ord);
+                console.log(des_ord);
+                
+              }
+              // this.renderDirection(map,maps, {lat:21, lng:106}, {lat:22, lng:105});
+              // this.renderDirection(map,maps, {lat:21, lng:106}, {lat:22, lng:104});
+            }
           }}
 
         >
@@ -90,8 +117,8 @@ class SimpleMap extends Component {
             );
 
           })
-        }
-        
+          }
+
 
         </GoogleMapReact>
       </div>

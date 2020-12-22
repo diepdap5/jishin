@@ -3,65 +3,54 @@ import "../../App.css";
 import { Layout, Table } from "antd";
 import { Component } from "react";
 import MapTemp from "../MapTemp";
-// import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
-// import {getDistance, getDistrict, getCity, getAddress} from "../../component/ForGetTable/getData";
-
+import effectData from "../../effect.json";
 
 const { Header, Content, Footer } = Layout;
-function changeDate(this_date) {
-  var return_date = "";
-  return_date =
-    this_date.getHours().toString() +
-    ":" +
-    this_date.getMinutes().toString() +
-    ":" +
-    this_date.getSeconds().toString() +
-    " " +
-    this_date.getDate().toString() +
-    "/" +
-    this_date.getMonth().toString() +
-    "/" +
-    this_date.getFullYear().toString();
-
-  return return_date;
-}
-
 class EarthquakeDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       places: [],
       loading: false,
-      jishin:[],
+      jishin: [],
       coord_des: {
         lat: null,
         lng: null,
       },
+      destination_list: [],
     };
   }
-  componentDidMount =() => {
+  componentDidMount = () => {
     const user_id = parseInt(this.props.match.params.earth_quake_id);
-        var jishins = this.props.jishins;
-        console.log(this.props.jishins);
-        console.log("haha");
-        console.log(this.props.places);
-        this.setState({ jishin : [
-          {
-            id: jishins[user_id].id,
-            occure_time: jishins[user_id].occure_time,
-            place: jishins[user_id].place,
-            strength: jishins[user_id].strength,
-            coord_lat: jishins[user_id].coord_lat,
-            coord_lng: jishins[user_id].coord_lng,
+    var jishins = this.props.jishins;
+    console.log(this.props.jishins);
+    console.log("haha");
+    console.log(this.props.places);
+    this.setState({
+      jishin: [
+        {
+          id: jishins[user_id].id,
+          occure_time: jishins[user_id].occure_time,
+          place: jishins[user_id].place,
+          strength: jishins[user_id].strength,
+          coord_lat: jishins[user_id].coord_lat,
+          coord_lng: jishins[user_id].coord_lng,
 
-          },] });
-        this.setState({coord_des:
-            {
-              lat: jishins[user_id].coord_lat,
-              lng: jishins[user_id].coord_lng,
-            }});
-
+        },]
+    });
+    this.setState({
+      coord_des:
+      {
+        lat: jishins[user_id].coord_lat,
+        lng: jishins[user_id].coord_lng,
+      }
+    });
+    this.setState({ destination_list: effectData[user_id].effect });
+    console.log(effectData);
+    console.log(effectData[0]);
+    console.log(effectData[0].effect);
+    console.log(this.state.destination_list);
   }
 
   handleTableChange = (pagination) => {
@@ -74,7 +63,7 @@ class EarthquakeDetail extends Component {
 
   render() {
     const { loading, jishin, coord_des } = this.state;
-    
+
     const columns = [
       {
         title: "場所の名前",
@@ -82,8 +71,8 @@ class EarthquakeDetail extends Component {
         key: "place_name",
         render: text => {
           let id = this.props.places.find(x => x.name === text).id.split("_");
-          if (id[0] === "shelter") return (<div><Link to={`/shelter/` + (id[1] -1).toString()}>{text}</Link></div>);
-          else if (id[0] === "building") return (<div><Link to={`/building/` + (id[1] -1).toString()}>{text}</Link></div>);
+          if (id[0] === "shelter") return (<div><Link to={`/shelter/` + (id[1] - 1).toString()}>{text}</Link></div>);
+          else if (id[0] === "building") return (<div><Link to={`/building/` + (id[1] - 1).toString()}>{text}</Link></div>);
         },
       },
       {
@@ -134,6 +123,7 @@ class EarthquakeDetail extends Component {
               user_location={this.props.user_location}
               data={this.props.places}
               earthquake_data={jishin}
+              destination_list={this.state.destination_list}
             />
           </div>
         </Content>

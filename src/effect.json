@@ -5,19 +5,19 @@
             {
                 "origin_lat": 22.449042,
                 "origin_lng": 105.948791,
-                "des_lat": 22.4490,
-                "des_lng": 105.948793
+                "des_lat": 22,
+                "des_lng": 105
             },
             {
                 "origin_lat": 22.4490,
                 "origin_lng": 105.948793,
-                "des_lat": 22.4490,
-                "des_lng": 105.948820
+                "des_lat": 22.5,
+                "des_lng": 106
             },
             {
                 "origin_lat": 22.449042,
                 "origin_lng": 105.948791,
-                "des_lat": 22.45,
+                "des_lat": 22.8,
                 "des_lng": 105.948820
             }
         ]
