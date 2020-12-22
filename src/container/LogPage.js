@@ -9,6 +9,7 @@ import SignUp from "../component/SignUp/SignUp";
 import Login from "../component/Login/Login";
 import { NotificationOutlined } from "@ant-design/icons";
 import { AiOutlineUser } from "react-icons/ai";
+// import { Circle } from "react-google-maps";
 const { Header, Content, Footer } = Layout;
 const menu = (
   <Menu>
@@ -42,11 +43,11 @@ const menu = (
 const user_menu = (
   <Menu>
     <Menu.Item key="0">
-    <Login />
+      <Login />
     </Menu.Item>
     <Menu.Divider />
     <Menu.Item key="1">
-    <SignUp />
+      <SignUp />
     </Menu.Item>
   </Menu>
 );
@@ -98,8 +99,9 @@ class LogPage extends Component {
           return {
             id: obj.id,
             occure_time: `
-            ${changeDate(new Date(obj.occure_time * 1000))} ${timeLeft ? "- " + timeLeft : ""
-              }`,
+            ${changeDate(new Date(obj.occure_time * 1000))} ${
+              timeLeft ? "- " + timeLeft : ""
+            }`,
             place: obj.place,
             strength: obj.strength,
             coord_lat: obj.coord_lat,
@@ -123,7 +125,18 @@ class LogPage extends Component {
         title: "場所",
         dataIndex: "place",
         key: "jishin_place",
-        render: text => (<div><Link to={`/earth_quake/` + (posts.find(x => x.place === text).id -1).toString()}>{text}</Link></div>),
+        render: (text) => (
+          <div>
+            <Link
+              to={
+                `/earth_quake/` +
+                (posts.find((x) => x.place === text).id - 1).toString()
+              }
+            >
+              {text}
+            </Link>
+          </div>
+        ),
         // render: text => (<div><Link to={`/earth_quake`}>{text}</Link></div>),
       },
       {
@@ -181,8 +194,7 @@ class LogPage extends Component {
               }}
               icon={<AiOutlineUser style={{ fontSize: "30px" }} />}
               size="large"
-            >
-            </Button>
+            ></Button>
           </Dropdown>
         </Header>
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
@@ -193,6 +205,23 @@ class LogPage extends Component {
               user_location={this.props.user_location}
               earthquake_data={jishin_data}
             />
+            {/* {jishin_data.map(function (jishin, index) {
+              return (
+                <Circle
+                  key={index}
+                  defaultCenter={{
+                    lat: parseFloat(jishin.coord_lat),
+                    lng: parseFloat(jishin.coord_lng),
+                  }}
+                  radius={3000}
+                  options={{
+                    strokeColor: "#0022ff",
+                    fillColor: "#0099ff",
+                    fillOpacity: 0.1,
+                  }}
+                />
+              );
+            })} */}
           </div>
         </Content>
         <Table

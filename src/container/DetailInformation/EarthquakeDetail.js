@@ -48,10 +48,12 @@ class EarthquakeDetail extends Component {
       }
     });
     this.setState({ destination_list: effectData[user_id].effect });
+    
     console.log(effectData);
     console.log(effectData[0]);
     console.log(effectData[0].effect);
     console.log(this.state.destination_list);
+    console.log(this.state.coord_des);
   }
 
   handleTableChange = (pagination) => {

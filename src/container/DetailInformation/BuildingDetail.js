@@ -18,10 +18,6 @@ class BuildingDetail extends Component {
         pageSize: 3,
       },
       loading: false,
-      config_center: {
-        lat: null,
-        lng: null,
-      },
       coord_des: {
         lat: null,
         lng: null,
@@ -78,7 +74,7 @@ class BuildingDetail extends Component {
   };
   render() {
     
-    const { pagination, loading, config_center } = this.state;
+    const { pagination, loading } = this.state;
     const user_id = this.props.match.params.building_id;
     const columns = [
       {

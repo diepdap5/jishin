@@ -13,7 +13,7 @@ class MapTemp extends Component {
         user_location={this.props.user_location}
         data = {this.props.data?this.props.data:[]}
         earthquake_data ={this.props.earthquake_data? this.props.earthquake_data : []}
-        defaultZoom={this.props.zoom}
+        defaultZoom={this.props.zoom? this.props.zoom : 11}
         destination = {this.props.destination}
         destination_list = {this.props.destination_list}
         />

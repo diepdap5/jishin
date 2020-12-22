@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import { Modal, Form, Input } from "antd";
 
 class SignUp extends Component {
   state = {
