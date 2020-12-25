@@ -8,9 +8,9 @@ import SearchField from "react-search-field";
 import { DownOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 import {getDistance, getDistrict, getCity, getAddress} from "../component/ForGetTable/getData";
+import PageHeader from '../component/PageHeader/PageHeader';
 
-
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 class ShelterPage extends Component {
   constructor(props) {
@@ -176,18 +176,7 @@ class ShelterPage extends Component {
     );
     return (
       <div style={{ background: "#FFFFFF" }}>
-        <Header
-          className="site-layout-sub-header-background"
-          style={{
-            padding: 0,
-            textAlign: "center",
-            fontSize: "30px",
-            color: "black",
-            background: "#FFE3F2",
-          }}
-        >
-          避難所情報
-        </Header>
+        <PageHeader title="避難所情報" />
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
             <MapTemp
