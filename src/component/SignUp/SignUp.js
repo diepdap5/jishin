@@ -1,10 +1,25 @@
 import React, { Component } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Button } from "antd";
+import axios from "axios";
 
 class SignUp extends Component {
   state = {
-    isSignUpModalVisible: false
+    user_count: 0,
+    valid: false,
+    isSignUpModalVisible: false,
+    isSignUpSuccessModalVisible: false
   };
+
+  componentDidMount() {
+    axios
+        .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user`)
+        .then((res) => {
+          const user_count = res.data.length;
+          this.setState({user_count});
+        })
+
+    //axios.delete(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user/9`)
+  }
 
   showModalSignUp = () => {
     this.setState({
@@ -12,15 +27,72 @@ class SignUp extends Component {
     });
   };
 
-  handleOkSignUp = () => {
+  showModalSignUpSuccess = () => {
+    this.setState({
+      isSignUpSuccessModalVisible: true
+    });
+  };
+
+  hideModalSignUpSuccess = () => {
+    this.setState({
+      isSignUpSuccessModalVisible: false
+    });
+  };
+
+  handleSubmit = () => {
+    const user_detail = {
+      id: "",
+      name: this.state.name,
+      email: this.state.email,
+      telephone: this.state.telephone,
+      passsword: this.state.password,
+    };
+
+    user_detail.id = (parseInt(this.state.user_count)+1).toString();
+    axios.post(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user`, user_detail);
+
+    //Alert success
+    this.showModalSignUpSuccess();
+
+    //Redirect
+    this.setState({
+      isSignUpModalVisible: false
+    });
+  }
+
+  handleCancelSignUp = () => {
     this.setState({
       isSignUpModalVisible: false
     });
   };
 
-  handleCancelSignUp = () => {
+  handleChangeName = (e) => {
     this.setState({
-      isSignUpModalVisible: false
+        name: e.target.value
+    });
+  };
+
+  handleChangeEmail = (e) => {
+    this.setState({
+        email: e.target.value
+    });
+  };
+
+  handleChangeTelephone = (e) => {
+    this.setState({
+        telephone: e.target.value
+    });
+  };
+
+  handleChangePassword = (e) => {
+    this.setState({
+        password: e.target.value
+    });
+  };
+
+  handleChangePassword2 = (e) => {
+    this.setState({
+        password2: e.target.value
     });
   };
 
@@ -37,43 +109,70 @@ class SignUp extends Component {
       <div>
         <span onClick={this.showModalSignUp}>サインアップ</span>
         <Modal
+          title="サインアップできた"
+          visible={this.state.isSignUpSuccessModalVisible}
+          footer={[
+            <Button key="back" onClick={this.hideModalSignUpSuccess}>
+              Ok
+            </Button>,
+          ]}
+        >
+          <p>サインアップできた。</p>
+        </Modal>
+        <Modal
           title="サインアップ"
           visible={this.state.isSignUpModalVisible}
-          onOk={this.handleOkSignUp}
-          onCancel={this.handleCancelSignUp}
+          footer={[
+            <Button key="back" onClick={this.handleCancelSignUp}>
+              キャンセル
+            </Button>,
+            <Button form="signup_form" type="primary" key="submit" htmlType="submit">
+              参加する
+            </Button>
+          ]}
         >
           <Form
             {...this.layout}
+            id="signup_form"
             name="basic"
-            initialValues={{ remember: true }}
-            onOk={this.handleOkSignUp}
-            onCancel={this.handleCancelSignUp}
+            initialValues={{ name: "", email: "", telephone: "", password: ""}}
+            onFinish={this.handleSubmit}
           >
-            <Form.Item name="name" label="名前" rules={[{ required: true }]}>
-              <Input />
+            <Form.Item
+              label="名前"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "名前を入力してください。" 
+                }
+              ]}>
+              <Input onChange={this.handleChangeName} />
             </Form.Item>
 
             <Form.Item
               label="メールアドレス"
-              name="username"
+              name="email"
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!"
+                  message: "メールアドレスを入力してください。"
                 }
-              ]}
-            >
-              <Input />
+              ]}>
+              <Input onChange={this.handleChangeEmail}/>
             </Form.Item>
 
             <Form.Item
-              name={["user", "phonenumber"]}
               label="電話番号"
+              name="telephone"
               rules={[
-                { required: true, message: "Please input your phone number!" }
+                {
+                  required: true,
+                  message: "電話番号を入力してください。" 
+                }
               ]}
             >
-              <Input />
+              <Input onChange={this.handleChangeTelephone}/>
             </Form.Item>
 
             <Form.Item
@@ -82,24 +181,34 @@ class SignUp extends Component {
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!"
+                  message: "パスワードを入力してください。"
                 }
               ]}
             >
-              <Input.Password />
+              <Input.Password onChange={this.handleChangePassword}/>
             </Form.Item>
 
             <Form.Item
               label="確認用のパスワード"
-              name="password"
+              name="password2"
               rules={[
                 {
                   required: true,
-                  message: "Please input your password again!"
-                }
+                  message: "確認用のパスワードを入力してください。"
+                },
+                ({ getFieldValue }) => ({
+                  validator(rule, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    else {
+                      return Promise.reject("確認用のパスワードとパスワードが同じゃありません。");
+                    }
+                  },
+                }),
               ]}
             >
-              <Input.Password />
+              <Input.Password onChange={this.handleChangePassword2}/>
             </Form.Item>
           </Form>
         </Modal>
