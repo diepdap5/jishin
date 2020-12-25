@@ -14,8 +14,6 @@ import DetailPage from "./container/DetailPage";
 import BuildingDetail from "./container/DetailInformation/BuildingDetail";
 import ShelterDetail from "./container/DetailInformation/ShelterDetail";
 import EarthquakeDetail from "./container/DetailInformation/EarthquakeDetail";
-import SignUp from "./component/SignUp/SignUp";
-import Login from "./component/Login/Login";
 import axios from "axios";
 import {getDistance, getDistrict, getCity, getAddress} from "./component/ForGetTable/getData";
 const { Sider } = Layout;

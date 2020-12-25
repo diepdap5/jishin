@@ -1,56 +1,13 @@
 import "antd/dist/antd.css";
 import "../App.css";
 import { Link, withRouter } from "react-router-dom";
-import { Layout, Table, Tag, Button, Dropdown, Menu } from "antd";
+import { Layout, Table, Tag } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
-import SignUp from "../component/SignUp/SignUp";
-import Login from "../component/Login/Login";
-import { NotificationOutlined } from "@ant-design/icons";
-import { AiOutlineUser } from "react-icons/ai";
-// import { Circle } from "react-google-maps";
-const { Header, Content, Footer } = Layout;
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <button
-        style={{
-          background: "white",
-          border: "white",
-        }}
-        onClick={() => window.location.reload(false)}
-      >
-        <Link to="/detail/noti">
-          New earthquake announcement: Thai Binh, Viet Nam
-        </Link>
-      </button>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1" disabled>
-      New earthquake announcement:Tokyo, Japan
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="2" disabled>
-      New earthquake announcement:New York, United States
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="3" disabled>
-      New earthquake announcement:Mexico City, Mexico
-    </Menu.Item>
-  </Menu>
-);
-const user_menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <Login />
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1">
-      <SignUp />
-    </Menu.Item>
-  </Menu>
-);
+import PageHeader from '../component/PageHeader/PageHeader';
+const { Content, Footer } = Layout;
+
 function changeDate(this_date) {
   var return_date = "";
   return_date =
@@ -112,11 +69,7 @@ class LogPage extends Component {
       });
   }
   handleTableChange = (pagination) => {
-    this.setState({
-      pagination: {
-        ...pagination,
-      },
-    });
+    this.setState({ pagination });
   };
   render() {
     const { posts, pagination, loading } = this.state;
@@ -136,8 +89,7 @@ class LogPage extends Component {
               {text}
             </Link>
           </div>
-        ),
-        // render: text => (<div><Link to={`/earth_quake`}>{text}</Link></div>),
+        )
       },
       {
         title: "起きる時間",
@@ -149,54 +101,12 @@ class LogPage extends Component {
         dataIndex: "strength",
         key: "strength",
         render: (text) => <Tag color="red">{text}</Tag>,
-      },
+      }
     ];
-    var i = 0;
-    var jishin_data = [];
-    for (i = 0; i < posts.length - 1; i++) {
-      jishin_data[i] = posts[i];
-    }
+    const jishin_data = posts;
     return (
       <Layout style={{ background: "#FFFFFF" }}>
-        <Header
-          className="site-layout-sub-header-background"
-          style={{
-            padding: 0,
-            textAlign: "center",
-            fontSize: "30px",
-            color: "black",
-            background: "#FFE3F2",
-          }}
-        >
-          <span>地震情報</span>
-          <Dropdown overlay={menu} placement="bottomCenter">
-            <Button
-              style={{
-                left: 310,
-                width: 10,
-                background: "#FFE3F2",
-                border: "white",
-              }}
-              icon={<NotificationOutlined style={{ fontSize: "30px" }} />}
-              size="large"
-            >
-              <span className="badge ">1</span>
-              {/* bottomRight */}
-            </Button>
-          </Dropdown>
-          <Dropdown overlay={user_menu} placement="bottomCenter">
-            <Button
-              style={{
-                left: 350,
-                width: 10,
-                background: "#FFE3F2",
-                border: "white",
-              }}
-              icon={<AiOutlineUser style={{ fontSize: "30px" }} />}
-              size="large"
-            ></Button>
-          </Dropdown>
-        </Header>
+        <PageHeader title="地震情報"/>
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
             <MapTemp

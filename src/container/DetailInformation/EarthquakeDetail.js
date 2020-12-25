@@ -5,8 +5,9 @@ import { Component } from "react";
 import MapTemp from "../MapTemp";
 import { Link, withRouter } from "react-router-dom";
 import effectData from "../../effect.json";
+import PageHeader from '../../component/PageHeader/PageHeader';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 class EarthquakeDetail extends Component {
   constructor(props) {
     super(props);
@@ -106,18 +107,7 @@ class EarthquakeDetail extends Component {
     ];
     return (
       <div style={{ background: "#FFFFFF" }}>
-        <Header
-          className="site-layout-sub-header-background"
-          style={{
-            padding: 0,
-            textAlign: "center",
-            fontSize: "30px",
-            color: "black",
-            background: "#FFE3F2",
-          }}
-        >
-          避難所情報
-        </Header>
+        <PageHeader title="避難所情報" />
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
             <MapTemp

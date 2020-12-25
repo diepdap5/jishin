@@ -170,6 +170,8 @@ import React from "react";
 import MapTemp from "./MapTemp";
 import { NotificationOutlined } from "@ant-design/icons";
 import {Circle} from "react-google-maps";
+import PageHeader from '../component/PageHeader/PageHeader';
+
 const { Header, Content, Footer } = Layout;
 function changeDate(this_date) {
   var return_date = '';
@@ -259,28 +261,7 @@ class DetailPage extends React.Component {
     return (
       <Router>
           <Layout style={{background: "#FFFFFF"}}>
-          <Header
-            className="site-layout-sub-header-background"
-            style={{
-              padding: 0,
-              textAlign: "center",
-              fontSize: "30px",
-              color: "black",
-              background: "#FFE3F2",
-            }}
-          >
-            <span>地震情報</span>
-            <Button
-              style={{
-                left: 510,
-                width: 10,
-                background: "#FFE3F2",
-                border: "yellow",
-              }}
-              icon={<NotificationOutlined style={{ fontSize: "30px" }} />}
-              size="large"
-            ></Button>
-          </Header>
+          <PageHeader title="地震情報" alert={false} />
           <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
             <div>
               <Switch>
