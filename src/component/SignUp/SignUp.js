@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Button } from "antd";
 import axios from "axios";
 
 class SignUp extends Component {
@@ -16,6 +16,8 @@ class SignUp extends Component {
           const user_count = res.data.length;
           this.setState({user_count});
         })
+
+    //axios.delete(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user/11`)
   }
 
   showModalSignUp = () => {
@@ -24,7 +26,7 @@ class SignUp extends Component {
     });
   };
 
-  handleOkSignUp = () => {
+  handleSubmit = () => {
     const user_detail = {
       id: "",
       name: this.state.name,
@@ -34,8 +36,11 @@ class SignUp extends Component {
     };
 
     user_detail.id = (parseInt(this.state.user_count)+1).toString();
-    axios.post(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user`, user_detail)
-  };
+    axios.post(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user`, user_detail);
+    //Log in
+
+    //Redirect
+  }
 
   handleCancelSignUp = () => {
     this.setState({
@@ -88,15 +93,21 @@ class SignUp extends Component {
         <Modal
           title="サインアップ"
           visible={this.state.isSignUpModalVisible}
-          onOk={this.handleOkSignUp}
-          onCancel={this.handleCancelSignUp}
+          footer={[
+            <Button key="back" onClick={this.handleCancelSignUp}>
+              Cancel
+            </Button>,
+            <Button form="signup_form" type="primary" key="submit" htmlType="submit">
+              Submit
+            </Button>
+          ]}
         >
           <Form
             {...this.layout}
+            id="signup_form"
             name="basic"
             initialValues={{ name: "", email: "", telephone: "", password: ""}}
-            onOk={this.handleOkSignUp}
-            onCancel={this.handleCancelSignUp}
+            onFinish={this.handleSubmit}
           >
             <Form.Item
               label="名前"
