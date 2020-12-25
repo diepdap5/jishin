@@ -17,7 +17,7 @@ class SignUp extends Component {
           this.setState({user_count});
         })
 
-    //axios.delete(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user/11`)
+    //axios.delete(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user/15`)
   }
 
   showModalSignUp = () => {
@@ -40,6 +40,9 @@ class SignUp extends Component {
     //Log in
 
     //Redirect
+    this.setState({
+      isSignUpModalVisible: false
+    });
   }
 
   handleCancelSignUp = () => {
