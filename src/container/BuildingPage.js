@@ -7,8 +7,9 @@ import axios from "axios";
 import SearchField from "react-search-field";
 import { Link } from "react-router-dom";
 import {getDistance} from "../component/ForGetTable/getData";
+import PageHeader from '../component/PageHeader/PageHeader';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 class BuildingPage extends Component {
   constructor(props) {
@@ -113,18 +114,7 @@ class BuildingPage extends Component {
 
     return (
       <div style={{background: "#FFFFFF"}}>
-        <Header
-          className="site-layout-sub-header-background"
-          style={{
-            padding: 0,
-            textAlign: "center",
-            fontSize: "30px",
-            color: "black",
-            background: "#FFE3F2",
-          }}
-        >
-          建物情報
-        </Header>
+        <PageHeader title="建物情報" />
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
             <MapTemp
