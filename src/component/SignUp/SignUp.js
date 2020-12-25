@@ -6,7 +6,8 @@ class SignUp extends Component {
   state = {
     user_count: 0,
     valid: false,
-    isSignUpModalVisible: false
+    isSignUpModalVisible: false,
+    isSignUpSuccessModalVisible: false
   };
 
   componentDidMount() {
@@ -17,12 +18,24 @@ class SignUp extends Component {
           this.setState({user_count});
         })
 
-    //axios.delete(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user/15`)
+    //axios.delete(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user/9`)
   }
 
   showModalSignUp = () => {
     this.setState({
       isSignUpModalVisible: true
+    });
+  };
+
+  showModalSignUpSuccess = () => {
+    this.setState({
+      isSignUpSuccessModalVisible: true
+    });
+  };
+
+  hideModalSignUpSuccess = () => {
+    this.setState({
+      isSignUpSuccessModalVisible: false
     });
   };
 
@@ -37,7 +50,9 @@ class SignUp extends Component {
 
     user_detail.id = (parseInt(this.state.user_count)+1).toString();
     axios.post(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user`, user_detail);
-    //Log in
+
+    //Alert success
+    this.showModalSignUpSuccess();
 
     //Redirect
     this.setState({
@@ -94,14 +109,25 @@ class SignUp extends Component {
       <div>
         <span onClick={this.showModalSignUp}>サインアップ</span>
         <Modal
+          title="サインアップできた"
+          visible={this.state.isSignUpSuccessModalVisible}
+          footer={[
+            <Button key="back" onClick={this.hideModalSignUpSuccess}>
+              Ok
+            </Button>,
+          ]}
+        >
+          <p>サインアップできた。</p>
+        </Modal>
+        <Modal
           title="サインアップ"
           visible={this.state.isSignUpModalVisible}
           footer={[
             <Button key="back" onClick={this.handleCancelSignUp}>
-              Cancel
+              キャンセル
             </Button>,
             <Button form="signup_form" type="primary" key="submit" htmlType="submit">
-              Submit
+              参加する
             </Button>
           ]}
         >
