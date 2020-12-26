@@ -6,6 +6,7 @@ import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import PageHeader from '../component/PageHeader/PageHeader';
+import {Button} from "antd"
 const { Content, Footer } = Layout;
 
 function changeDate(this_date) {
@@ -56,9 +57,8 @@ class LogPage extends Component {
           return {
             id: obj.id,
             occure_time: `
-            ${changeDate(new Date(obj.occure_time * 1000))} ${
-              timeLeft ? "- " + timeLeft : ""
-            }`,
+            ${changeDate(new Date(obj.occure_time * 1000))} ${timeLeft ? "- " + timeLeft : ""
+              }`,
             place: obj.place,
             strength: obj.strength,
             coord_lat: obj.coord_lat,
@@ -78,18 +78,6 @@ class LogPage extends Component {
         title: "場所",
         dataIndex: "place",
         key: "jishin_place",
-        render: (text) => (
-          <div>
-            <Link
-              to={
-                `/earth_quake/` +
-                (posts.find((x) => x.place === text).id - 1).toString()
-              }
-            >
-              {text}
-            </Link>
-          </div>
-        )
       },
       {
         title: "起きる時間",
@@ -101,12 +89,26 @@ class LogPage extends Component {
         dataIndex: "strength",
         key: "strength",
         render: (text) => <Tag color="red">{text}</Tag>,
+      },
+      {
+        title: ' ',
+        key: 'action',
+        dataIndex: 'place',
+        render: text => (
+          <div>
+            <Button type="primary">
+              <Link to={
+                `/earth_quake/` +
+                (posts.find((x) => x.place === text).id - 1).toString()}>特別情報</Link>
+            </Button>
+          </div>
+        )
       }
     ];
     const jishin_data = posts;
     return (
       <Layout style={{ background: "#FFFFFF" }}>
-        <PageHeader title="地震情報"/>
+        <PageHeader title="地震情報" />
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
             <MapTemp

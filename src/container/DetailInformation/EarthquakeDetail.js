@@ -107,7 +107,7 @@ class EarthquakeDetail extends Component {
     ];
     return (
       <div style={{ background: "#FFFFFF" }}>
-        <PageHeader title="避難所情報" />
+        <PageHeader title="特別情報" />
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
             <MapTemp
