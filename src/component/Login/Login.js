@@ -24,10 +24,10 @@ const Login = ({ setIsAuthenticated, setUserName }) => {
     setModalVisibility(true);
   };
 
-  const handleOk = ({ username, password }) => {
+  const handleOk = ({ email, password }) => {
     axios.get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/user`).then((res) => {
       const users = res.data;
-      const foundUser = users.find((user) => user.name === username && user.passsword === password);
+      const foundUser = users.find((user) => user.email === email && user.passsword === password);
       if (foundUser) {
         setIsAuthenticated(true);
         setUserName(foundUser.name);
@@ -46,11 +46,24 @@ const Login = ({ setIsAuthenticated, setUserName }) => {
       <span onClick={showModal}>ログイン</span>
       <Modal title="ログイン" visible={modalVisibility} onOk={handleOk} onCancel={handleCancel} footer={null}>
         <Form {...layout} name="basic" onFinish={handleOk} onFinishFailed={handleCancel}>
-          <Form.Item label="Username" name="username" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!'
+              },
+              {
+                required: true,
+                message: 'Please input your E-mail!'
+              }
+            ]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
             <Input.Password />
           </Form.Item>
 
