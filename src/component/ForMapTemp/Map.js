@@ -33,19 +33,18 @@ class SimpleMap extends Component {
         }
       }
     );
-    
   }
-  renderCircle(map,maps, center_ord, destination_list,strength){
+  renderCircle(map, maps, center_ord, destination_list, strength) {
     const round_circle = new maps.Circle({
-      strokeColor: '#FF0000',
+      strokeColor: "#FF0000",
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: '#FF0000',
+      fillColor: "#FF0000",
       fillOpacity: 0.3,
       // map,
       center: center_ord,
       radius: strength * 5000,
-    })
+    });
     round_circle.setMap(map);
   }
 
@@ -72,14 +71,6 @@ class SimpleMap extends Component {
               var temp_destination_list = this.props.destination_list;
               var i;
               for (i = 0; i < temp_destination_list.length; i++) {
-                var origin_ord = {
-                  lat: temp_destination_list[i].origin_lat,
-                  lng: temp_destination_list[i].origin_lng,
-                };
-                var des_ord = {
-                  lat: temp_destination_list[i].des_lat,
-                  lng: temp_destination_list[i].des_lng,
-                };
                 this.renderDirection(
                   map,
                   maps,
@@ -94,7 +85,7 @@ class SimpleMap extends Component {
                   "#FF0000"
                 );
               }
-              // this.renderCircle(map,maps,this.props.center,this.props.destination_list, this.props.earthquake_data[0].strength);
+              this.renderCircle(map,maps,this.props.center,this.props.destination_list, this.props.earthquake_data[0].strength);
             }
           }}
         >
@@ -140,9 +131,14 @@ class SimpleMap extends Component {
               <MarkerPin
                 lat={this_data.coord_lat}
                 lng={this_data.coord_lng}
-                name={"Occure Time: " + this_data.occure_time + " \nStrength: " + this_data.strength}
+                name={
+                  "Occure Time: " +
+                  this_data.occure_time +
+                  " \nStrength: " +
+                  this_data.strength
+                }
                 color="red"
-                tooltip={ this_data.place }
+                tooltip={this_data.place}
               />
             );
           })}
