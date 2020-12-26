@@ -1,13 +1,13 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { Layout, Table, Button, Dropdown, Menu, message } from "antd";
+import { Layout, Table, Button, Dropdown, Menu, message, Col, Row } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import SearchField from "react-search-field";
 import { DownOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
-import {getDistance, getDistrict, getCity, getAddress} from "../component/ForGetTable/getData";
+import { getDistance, getDistrict, getCity, getAddress } from "../component/ForGetTable/getData";
 import PageHeader from '../component/PageHeader/PageHeader';
 
 const { Content, Footer } = Layout;
@@ -117,7 +117,7 @@ class ShelterPage extends Component {
         }));
         this.setState({ shelters });
       });
-      message.info(event.key);
+    message.info(event.key);
   }
 
   selectRow = (record) => {
@@ -132,7 +132,7 @@ class ShelterPage extends Component {
         title: "場所の名前",
         dataIndex: "name",
         key: "shelter_name",
-        render: text => (<div><Link to={`/shelter/` + (shelters.find(x => x.name === text).id -1).toString()}>{text}</Link></div>),
+        render: text => (<div><Link to={`/shelter/` + (shelters.find(x => x.name === text).id - 1).toString()}>{text}</Link></div>),
       },
       {
         title: "場所",
@@ -187,31 +187,41 @@ class ShelterPage extends Component {
             />
           </div>
         </Content>
+        <Col >
+          <Row >
+            <Col span={16}>
+              <SearchField
+                placeholder="検索..."
+                onChange={this.onChange}
+                onClick={this.onChange}
+                classNames="shelter-search"
+              />
+            </Col>
+            <Col span={8}>
+              <Dropdown overlay={menu}>
+                <Button style={{background: "pink", color: "black" , borderColor:"pink"}} block>
+                都市で検索 <DownOutlined />
+                </Button>
+              </Dropdown>
+            </Col>
 
-        <SearchField
-          placeholder="Search..."
-          onChange={this.onChange}
-          onClick={this.onChange}
-          classNames="shelter-search"
-        />
-        <Dropdown overlay={menu}>
-          <Button>
-            Find <DownOutlined />
-          </Button>
-        </Dropdown>
+          </Row>
 
-        <Table
-          columns={columns}
-          dataSource={shelters}
-          pagination={pagination}
-          loading={loading}
-          onChange={this.handleTableChange}
-          onRow={(record) => ({
-            onClick: () => {
-              this.selectRow(record);
-            },
-          })}
-        />
+            <Table
+              columns={columns}
+              dataSource={shelters}
+              pagination={pagination}
+              loading={loading}
+              onChange={this.handleTableChange}
+              onRow={(record) => ({
+                onClick: () => {
+                  this.selectRow(record);
+                },
+              })
+              } 
+            />
+
+        </Col>
         <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>開発チーム・花火</Footer>
       </div>
       // </Layout>

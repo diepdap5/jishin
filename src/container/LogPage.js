@@ -117,23 +117,6 @@ class LogPage extends Component {
               user_location={this.props.user_location}
               earthquake_data={jishin_data}
             />
-            {/* {jishin_data.map(function (jishin, index) {
-              return (
-                <Circle
-                  key={index}
-                  defaultCenter={{
-                    lat: parseFloat(jishin.coord_lat),
-                    lng: parseFloat(jishin.coord_lng),
-                  }}
-                  radius={3000}
-                  options={{
-                    strokeColor: "#0022ff",
-                    fillColor: "#0099ff",
-                    fillOpacity: 0.1,
-                  }}
-                />
-              );
-            })} */}
           </div>
         </Content>
         <Table

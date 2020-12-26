@@ -1,12 +1,12 @@
 import "antd/dist/antd.css";
 import "../App.css";
-import { Layout, Table } from "antd";
+import { Layout, Table, Col, Row } from "antd";
 import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import SearchField from "react-search-field";
 import { Link } from "react-router-dom";
-import {getDistance} from "../component/ForGetTable/getData";
+import { getDistance } from "../component/ForGetTable/getData";
 import PageHeader from '../component/PageHeader/PageHeader';
 
 const { Content, Footer } = Layout;
@@ -34,7 +34,7 @@ class BuildingPage extends Component {
           place: obj.place,
           coord_lat: obj.coord_lat,
           coord_lng: obj.coord_lng,
-          distance:getDistance(
+          distance: getDistance(
             obj.coord_lat,
             obj.coord_lng,
             this.props.user_location.lat,
@@ -59,13 +59,13 @@ class BuildingPage extends Component {
     axios
       .get(`https://5fa8a7c7c9b4e90016e697f4.mockapi.io/api/jishin/building`)
       .then((res) => {
-        const buildings = res.data.filter(building=>building.name.toLowerCase().includes(value.toLowerCase())).map((obj) => ({
+        const buildings = res.data.filter(building => building.name.toLowerCase().includes(value.toLowerCase())).map((obj) => ({
           id: obj.id,
           name: obj.name,
           place: obj.place,
           coord_lat: obj.coord_lat,
           coord_lng: obj.coord_lng,
-          distance:getDistance(
+          distance: getDistance(
             obj.coord_lat,
             obj.coord_lng,
             this.props.user_location.lat,
@@ -84,7 +84,7 @@ class BuildingPage extends Component {
         title: "場所の名前",
         dataIndex: "name",
         key: "building_name",
-      render: text => (<div><Link to={`/building/` + (buildings.find(x => x.name === text).id -1).toString()}>{text}</Link></div>),
+        render: text => (<div><Link to={`/building/` + (buildings.find(x => x.name === text).id - 1).toString()}>{text}</Link></div>),
       },
       {
         title: "場所",
@@ -113,7 +113,7 @@ class BuildingPage extends Component {
     ];
 
     return (
-      <div style={{background: "#FFFFFF"}}>
+      <div style={{ background: "#FFFFFF" }}>
         <PageHeader title="建物情報" />
         <Content style={{ margin: "24px 16px 0", minHeight: "800px" }}>
           <div>
@@ -125,23 +125,27 @@ class BuildingPage extends Component {
             />
           </div>
         </Content>
-        
-        <SearchField
-          placeholder="Search..."
-          onChange={this.onChange}
-          onClick={this.onChange}
-          classNames="building-search"
-        />
+        <Col >
+          <Row >
+            <Col span={24}>
+              <SearchField
+                placeholder="検索..."
+                onChange={this.onChange}
+                onClick={this.onChange}
+                classNames="shelter-search"
+              />
+            </Col>
+          </Row>
+          <Table
+            columns={columns}
+            dataSource={buildings}
+            pagination={pagination}
+            loading={loading}
+            onChange={this.handleTableChange}
 
-        <Table
-          columns={columns}
-          dataSource={buildings}
-          pagination={pagination}
-          loading={loading}
-          onChange={this.handleTableChange}
-
-        />
-        <Footer style={{ textAlign: "center" , background: "#FFFFFF"}}>開発チーム・花火</Footer>
+          />
+        </Col>
+        <Footer style={{ textAlign: "center", background: "#FFFFFF" }}>開発チーム・花火</Footer>
       </div>
       // </Layout>
     );
