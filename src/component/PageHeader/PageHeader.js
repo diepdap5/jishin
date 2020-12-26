@@ -24,6 +24,7 @@ const PageHeader = ({ title, alert = true }) => {
     setIsAuthenticated(false);
     setUserName('');
     localStorage.clear();
+    window.location.reload(false); 
   };
 
   const notificationMenu = (
@@ -90,15 +91,15 @@ const PageHeader = ({ title, alert = true }) => {
           </Button>
         </Dropdown>
       ) : (
-        <Dropdown overlay={unauthenticatedUserMenu} placement="bottomCenter">
-          <Button
-            style={{ left: 350, fontSize: '30px' }}
-            icon={<AiOutlineUser style={{ fontSize: '30px' }} />}
-            size="small"
-            type="text"
-          ></Button>
-        </Dropdown>
-      )}
+          <Dropdown overlay={unauthenticatedUserMenu} placement="bottomCenter">
+            <Button
+              style={{ left: 350, fontSize: '30px' }}
+              icon={<AiOutlineUser style={{ fontSize: '30px' }} />}
+              size="small"
+              type="text"
+            ></Button>
+          </Dropdown>
+        )}
     </Header>
   );
 };

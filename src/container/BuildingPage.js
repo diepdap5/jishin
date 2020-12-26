@@ -21,6 +21,7 @@ class BuildingPage extends Component {
         pageSize: 3,
       },
       loading: false,
+      isauthe: false,
     };
   }
 
@@ -44,6 +45,10 @@ class BuildingPage extends Component {
         }));
         this.setState({ buildings });
       });
+    var loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      this.setState({ isauthe: true });
+    }
   }
 
   handleTableChange = (pagination) => {
@@ -84,7 +89,14 @@ class BuildingPage extends Component {
         title: "場所の名前",
         dataIndex: "name",
         key: "building_name",
-        render: text => (<div><Link to={`/building/` + (buildings.find(x => x.name === text).id - 1).toString()}>{text}</Link></div>),
+        render: text => {
+          if (this.state.isauthe === true){
+            return (<div><Link to={`/building/` + (buildings.find(x => x.name === text).id - 1).toString()}>{text}</Link></div>);
+          }
+          else {
+            return (<div>{text}</div>);
+          }
+        } 
       },
       {
         title: "場所",

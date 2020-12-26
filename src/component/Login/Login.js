@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Modal, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
+// import fs from 'fs';
+import writeJsonFile from 'write-json-file';
 
 const layout = {
   labelCol: {
@@ -33,6 +35,7 @@ const Login = ({ setIsAuthenticated, setUserName }) => {
         setUserName(foundUser.name);
         localStorage.setItem('user', JSON.stringify(foundUser));
         setModalVisibility(false);
+        window.location.reload(false); 
       } else message.error('Invalid user');
     });
   };

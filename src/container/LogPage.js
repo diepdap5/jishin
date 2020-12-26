@@ -6,9 +6,9 @@ import { Component } from "react";
 import MapTemp from "./MapTemp";
 import axios from "axios";
 import PageHeader from '../component/PageHeader/PageHeader';
-import {Button} from "antd"
-const { Content, Footer } = Layout;
+import { Button } from "antd"
 
+const { Content, Footer } = Layout;
 function changeDate(this_date) {
   var return_date = "";
   return_date =
@@ -36,6 +36,7 @@ class LogPage extends Component {
         pageSize: 3,
       },
       loading: false,
+      isauthe: false,
     };
   }
   componentDidMount() {
@@ -67,6 +68,10 @@ class LogPage extends Component {
         });
         this.setState({ posts });
       });
+    var loggedInUser = localStorage.getItem('user');
+    if (loggedInUser){
+      this.setState({ isauthe: true });
+    }
   }
   handleTableChange = (pagination) => {
     this.setState({ pagination });
@@ -94,15 +99,24 @@ class LogPage extends Component {
         title: ' ',
         key: 'action',
         dataIndex: 'place',
-        render: text => (
-          <div>
-            <Button type="primary">
-              <Link to={
-                `/earth_quake/` +
-                (posts.find((x) => x.place === text).id - 1).toString()}>特別情報</Link>
-            </Button>
-          </div>
-        )
+        render: text => {
+          if (this.state.isauthe === true) {
+            return (
+              <div>
+                <Button type="primary">
+                  <Link to={
+                    `/earth_quake/` +
+                    (posts.find((x) => x.place === text).id - 1).toString()}>特別情報</Link>
+                </Button>
+              </div>
+            );
+          }
+          else{
+            return (<div></div>);
+          }
+        }
+
+
       }
     ];
     const jishin_data = posts;
