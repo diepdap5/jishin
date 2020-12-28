@@ -80,17 +80,17 @@ class LogPage extends Component {
     const { posts, pagination, loading } = this.state;
     const columns = [
       {
-        title: "場所",
+        title: <div style={{fontSize: 25}}>場所</div>, 
         dataIndex: "place",
         key: "jishin_place",
       },
       {
-        title: "起きる時間",
+        title: <div style={{fontSize: 25}}>起きる時間</div>,
         dataIndex: "occure_time",
         key: "jishin_occure_time",
       },
       {
-        title: "震度",
+        title: <div style={{fontSize: 25}}>震度</div>,
         dataIndex: "strength",
         key: "strength",
         render: (text) => <Tag color="red">{text}</Tag>,

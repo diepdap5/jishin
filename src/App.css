@@ -129,3 +129,6 @@
 .shelter-search{
   width: 100%
 }
+.ant-table table { 
+  font-size: 15px; 
+}

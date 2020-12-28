@@ -8,7 +8,7 @@ import {getDistance, getDistrict, getCity, getAddress} from "../../component/For
 import PageHeader from '../../component/PageHeader/PageHeader';
 
 
-const { Header, Content, Footer } = Layout;
+const {  Content, Footer } = Layout;
 class BuildingDetail extends Component {
   constructor(props) {
     super(props);
@@ -79,27 +79,27 @@ class BuildingDetail extends Component {
     const user_id = this.props.match.params.building_id;
     const columns = [
       {
-        title: "場所の名前",
+        title: <div style={{fontSize: 25}}>場所の名前</div>,
         dataIndex: "name",
         key: "building_name",
       },
       {
-        title: "場所",
+        title: <div style={{fontSize: 25}}>場所</div>,
         dataIndex: "place",
         key: "building_place",
       },
       {
-        title: "地区",
+        title: <div style={{fontSize: 25}}>地区</div>,
         dataIndex: "district",
         key: "district",
       },
       {
-        title: "都市",
+        title: <div style={{fontSize: 25}}>都市</div>,
         dataIndex: "city",
         key: "city",
       },
       {
-        title: "距離 ( m )",
+        title: <div style={{fontSize: 25}}>距離 ( m )</div>,
         dataIndex: "distance",
         key: "distance",
       },

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Modal, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
-// import fs from 'fs';
-import writeJsonFile from 'write-json-file';
 
 const layout = {
   labelCol: {

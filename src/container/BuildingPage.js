@@ -86,7 +86,7 @@ class BuildingPage extends Component {
     const { buildings, pagination, loading } = this.state;
     const columns = [
       {
-        title: "場所の名前",
+        title: <div style={{fontSize: 25}}>場所の名前</div>,
         dataIndex: "name",
         key: "building_name",
         render: text => {
@@ -99,12 +99,12 @@ class BuildingPage extends Component {
         } 
       },
       {
-        title: "場所",
+        title: <div style={{fontSize: 25}}>場所</div>,
         dataIndex: "place",
         key: "building_place",
       },
       {
-        title: "距離 ( m )",
+        title: <div style={{fontSize: 25}}>距離 ( m )</div>,
         dataIndex: "distance",
         key: "distance",
         defaultSortOrder: 'ascend',
@@ -114,7 +114,7 @@ class BuildingPage extends Component {
         },
       },
       {
-        title: "防備レベル",
+        title: <div style={{fontSize: 25}}>防備レベル</div>,
         dataIndex: "fortification",
         key: "fortification",
         sorter: {

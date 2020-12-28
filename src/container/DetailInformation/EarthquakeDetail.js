@@ -70,7 +70,7 @@ class EarthquakeDetail extends Component {
 
     const columns = [
       {
-        title: "場所の名前",
+        title: <div style={{fontSize: 25}}>場所の名前</div>,
         dataIndex: "name",
         key: "place_name",
         render: text => {
@@ -80,22 +80,22 @@ class EarthquakeDetail extends Component {
         },
       },
       {
-        title: "場所",
+        title: <div style={{fontSize: 25}}>場所</div>,
         dataIndex: "place",
         key: "place_address",
       },
       {
-        title: "地区",
+        title: <div style={{fontSize: 25}}>地区</div>,
         dataIndex: "district",
         key: "district",
       },
       {
-        title: "都市",
+        title: <div style={{fontSize: 25}}>都市</div>,
         dataIndex: "city",
         key: "city",
       },
       {
-        title: "距離 ( m )",
+        title: <div style={{fontSize: 25}}>距離 ( m )</div>,
         dataIndex: "distance",
         defaultSortOrder: 'ascend',
         key: "distance",
